@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eco-Melody</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  width: min(92%, 620px);
+  background: white;
+  border-radius: 30px;
+  padding: 28px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.12);
+  text-align: center;
+}
+
+.logo {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.eco {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+button {
+  border: none;
+  border-radius: 22px;
+  padding: 30px 10px;
+  font-size: 21px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .15s;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.assembly {
+  background: #f05252;
+}
+
+.class {
+  background: #ffd83d;
+}
+
+.meal {
+  background: #55a9ff;
+}
+
+.nap {
+  background: #68d17a;
+}
+
+.stop {
+  width: 100%;
+  margin-top: 18px;
+  background: #222;
+  color: white;
+}
+
+#status {
+  margin-top: 17px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@media(max-width:500px) {
+  .app {
+    padding: 20px;
+  }
+
+  button {
+    padding: 25px 5px;
+    font-size: 17px;
+  }
+
+  .logo {
+    font-size: 31px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="logo">Eco-Melody</div>
+
+  <div class="eco">
+    E: Effective • C: Cue • O: Orientation
+  </div>
+
+  <div class="buttons">
+
+    <button class="assembly"
+      onclick="playAudio('ASSEMBLY TIME.mp3','Assembly Time')">
+      Assembly Time
+    </button>
+
+    <button class="class"
+      onclick="playAudio('CLASS TIME.mp3','Class Time')">
+      Class Time
+    </button>
+
+    <button class="meal"
+      onclick="playAudio('MEALTIME.mp3','Meal Time')">
+      Meal Time
+    </button>
+
+    <button class="nap"
+      onclick="playAudio('NAP TIME.mp3','Nap Time')">
+      Nap Time
+    </button>
+
+  </div>
+
+  <button class="stop" onclick="stopAudio()">STOP</button>
+
+  <div id="status">ECO-MELODY READY</div>
+
+</div>
+
+<script>
+
+let currentAudio = null;
+
+function playAudio(file, name) {
+
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  currentAudio = new Audio(file);
+
+  currentAudio.play();
+
+  document.getElementById("status").textContent =
+    "PLAYING: " + name;
+
+  currentAudio.onended = function() {
+    document.getElementById("status").textContent =
+      "ECO-MELODY READY";
+  };
+}
+
+function stopAudio() {
+
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  document.getElementById("status").textContent =
+    "ECO-MELODY READY";
+}
+
+</script>
+
+</body>
+</html>
