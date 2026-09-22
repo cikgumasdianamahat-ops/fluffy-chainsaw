@@ -65,8 +65,8 @@ body:before{content:"";position:fixed;inset:-30px;background:url('cute-backgroun
       <div class="schedule-item">🔵 9:00 pagi — Mealtime</div>
       <div class="schedule-item">🟢 10:00 pagi — Class Time</div>
       <div class="schedule-item">🔵 11:00 pagi — Mealtime</div>
-      <div class="schedule-item">🟣 3:30 petang — Nap Time</div>
-      <div class="schedule-item">🔵 3:20 petang — Mealtime</div>
+      <div class="schedule-item">🟣 11:45 pagi — Nap Time</div>
+      <div class="schedule-item">🔵 3:50 petang — Mealtime</div>
     </div>
     <p id="nextCue">Seterusnya: —</p>
     <div class="schedule-actions"><button class="start" onclick="startSchedule()">▶ MULA JADUAL</button><button class="stop" onclick="stopSchedule()">■ HENTI JADUAL</button></div>
@@ -96,8 +96,8 @@ const schedule=[
  {hour:9,minute:0,file:'MEALTIME.mp3',name:'Mealtime'},
  {hour:10,minute:0,file:'CLASS TIME.mp3',name:'Class Time'},
  {hour:11,minute:0,file:'MEALTIME.mp3',name:'Mealtime'},
- {hour:15,minute:30,file:'NAP TIME.mp3',name:'Nap Time'},
- {hour:15,minute:20,file:'MEALTIME.mp3',name:'Mealtime'}
+ {hour:11,minute:45,file:'NAP TIME.mp3',name:'Nap Time'},
+ {hour:15,minute:50,file:'MEALTIME.mp3',name:'Mealtime'}
 ];
 function status(t){document.getElementById('status').textContent=t}
 function playCue(file,name){
