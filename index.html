@@ -1,76 +1,128 @@
 <!DOCTYPE html>
-<html lang="ms"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Eco-Melody Auto Schedule</title>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Eco-Melody</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:20px;font-family:Arial,sans-serif;background:#f4f7fb;display:flex;justify-content:center;align-items:center}
-.app{width:100%;max-width:820px;background:#fff;border-radius:30px;padding:28px;box-shadow:0 8px 30px rgba(0,0,0,.1)}
-.brand-logo{width:100%;max-width:520px;height:auto;display:block;margin:0 auto 24px}
-.buttons,.times,.schedule-buttons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-button{border:0;border-radius:25px;padding:30px 10px;font-size:24px;font-weight:bold;cursor:pointer}
-.assembly{background:#f45151}.class{background:#ffd43b}.meal{background:#55a4f2}.nap{background:#63cf78}
-.stop{width:100%;margin-top:18px;background:#222;color:white}#status{text-align:center;font-weight:bold;margin:18px 0}
-.schedule{border-top:1px solid #ddd;margin-top:20px;padding-top:18px}.schedule h2{text-align:center}.time{background:#f5f5f5;border-radius:15px;padding:14px;font-size:17px}.time b{font-size:18px}
-.schedule-buttons{margin-top:18px}.start{background:#159447;color:white}.stop-schedule{background:#555;color:white}
-#nextCue{text-align:center;font-weight:bold;margin-top:15px}.note{text-align:center;font-size:13px;color:#555;line-height:1.5;margin-top:10px}.bluetooth{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px auto 18px;padding:10px 16px;border-radius:18px;background:#eef6ff;color:#1261a0;font-weight:bold;font-size:16px}.bt-icon{width:24px;height:30px;display:inline-block}.bt-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round}.bt-dot{width:9px;height:9px;border-radius:50%;background:#22a05a;display:inline-block;box-shadow:0 0 0 3px #d8f3e3}
-@media(max-width:600px){button{font-size:19px;padding:26px 8px}.app{padding:20px}}
-</style></head><body>
-<div class="app">
-<img src="Brand%20Eco%20Melody.jpg" alt="Eco-Melody" class="brand-logo">
-<div class="bluetooth"><span class="bt-icon"><svg viewBox="0 0 24 30"><path d="M12 2v26M12 2l8 7-8 6 8 6-8 7M4 9l8 6M4 21l8-6"/></svg></span><span>Bluetooth Speaker</span><span class="bt-dot"></span><span id="btText">Sedia</span></div>
-<div class="buttons">
-<button class="assembly" onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')">Assembly Time</button>
-<button class="class" onclick="playCue('CLASS TIME.mp3','Class Time')">Class Time</button>
-<button class="meal" onclick="playCue('MEALTIME.mp3','Meal Time')">Meal Time</button>
-<button class="nap" onclick="playCue('NAP TIME.mp3','Nap Time')">Nap Time</button>
+:root{--shadow:0 18px 50px rgba(30,75,45,.28)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#dff5ff;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+body:before{content:"";position:fixed;inset:-30px;background:url('cute-background.png') center/cover no-repeat;filter:blur(18px);transform:scale(1.08);opacity:.72}
+.app{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.78vw);aspect-ratio:9/16;overflow:hidden;background:#bdeeff;box-shadow:var(--shadow);border-radius:28px}
+.scene{position:absolute;inset:0;background:url('cute-background.png') center/cover no-repeat}
+/* Exact original Eco-Melody brand placed over the AI concept artwork. */
+.brand-wrap{position:absolute;left:7%;top:3.3%;width:86%;height:15%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.96);border-radius:22px;box-shadow:0 7px 18px rgba(0,0,0,.12);z-index:5;padding:5px 9px}
+.brand-wrap img{width:100%;height:auto;display:block;border-radius:14px}
+.hit{position:absolute;border:0;background:transparent;cursor:pointer;z-index:6;border-radius:30px}
+.hit:focus-visible{outline:4px solid rgba(255,255,255,.95);outline-offset:2px}
+.hit:hover{background:rgba(255,255,255,.08)}
+#assembly{left:11%;top:27.5%;width:38%;height:22%}
+#class{left:51%;top:27.5%;width:38%;height:22%}
+#meal{left:11%;top:49.8%;width:38%;height:22%}
+#nap{left:51%;top:49.8%;width:38%;height:22%}
+#volume{left:13%;top:77%;width:15%;height:9%}
+#bluetooth{left:29%;top:77%;width:17%;height:9%}
+#auto{left:45%;top:77%;width:21%;height:9%}
+#qr{left:66%;top:77%;width:16%;height:9%}
+#settings{left:82%;top:77%;width:13%;height:9%}
+#status{position:absolute;left:12%;right:12%;bottom:7.5%;z-index:7;text-align:center;font-size:clamp(11px,2.4vw,16px);font-weight:800;color:#315d3f;background:rgba(255,255,255,.78);padding:7px 12px;border-radius:18px;backdrop-filter:blur(8px);box-shadow:0 5px 15px rgba(0,0,0,.08)}
+.modal{position:absolute;inset:0;z-index:20;background:rgba(26,63,44,.45);display:none;align-items:center;justify-content:center;padding:7%}
+.modal.show{display:flex}
+.card{width:100%;max-height:88%;overflow:auto;background:#fffdf7;border-radius:28px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;color:#31543d}
+.card h2{margin:0 0 14px;font-size:24px}.card p{line-height:1.5}.close{border:0;border-radius:18px;padding:12px 22px;background:#25a96f;color:#fff;font-weight:800;font-size:16px;cursor:pointer}
+.schedule-list{display:grid;gap:8px;text-align:left;margin:14px 0}.schedule-item{padding:11px 14px;border-radius:15px;background:#eefaf1;font-weight:700}.schedule-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.schedule-actions button{border:0;border-radius:16px;padding:11px 15px;font-weight:800;cursor:pointer}.start{background:#2ab875;color:#fff}.stop{background:#ef5570;color:#fff}
+.qr{width:min(70vw,270px);max-width:100%;border-radius:16px;background:#fff;padding:8px}
+.volume{width:100%;accent-color:#2ab875}
+.small{font-size:13px;color:#6b786e}
+@media(max-width:600px){.app{border-radius:0}.brand-wrap{border-radius:17px}.status{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app" aria-label="Aplikasi Eco-Melody">
+  <div class="scene"></div>
+  <div class="brand-wrap"><img src="brand.jpg" alt="Eco-Melody E Effective C Cue O Orientation"></div>
+
+  <button id="assembly" class="hit" aria-label="Assembly Time" onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')"></button>
+  <button id="class" class="hit" aria-label="Class Time" onclick="playCue('CLASS TIME.mp3','Class Time')"></button>
+  <button id="meal" class="hit" aria-label="Mealtime" onclick="playCue('MEALTIME.mp3','Mealtime')"></button>
+  <button id="nap" class="hit" aria-label="Nap Time" onclick="playCue('NAP TIME.mp3','Nap Time')"></button>
+
+  <button id="volume" class="hit" aria-label="Volume" onclick="openModal('volumeModal')"></button>
+  <button id="bluetooth" class="hit" aria-label="Bluetooth" onclick="bluetoothInfo()"></button>
+  <button id="auto" class="hit" aria-label="Auto Schedule" onclick="openModal('scheduleModal')"></button>
+  <button id="qr" class="hit" aria-label="Scan QR" onclick="openModal('qrModal')"></button>
+  <button id="settings" class="hit" aria-label="Settings" onclick="openModal('settingsModal')"></button>
+
+  <div id="status">ECO-MELODY READY</div>
+
+  <div id="scheduleModal" class="modal"><div class="card">
+    <h2>⏰ Auto Schedule Eco-Melody</h2>
+    <p class="small">Tekan MULA JADUAL sekali selepas membuka aplikasi.</p>
+    <div class="schedule-list">
+      <div class="schedule-item">🔴 8:30 pagi — Assembly Time</div>
+      <div class="schedule-item">🔵 9:00 pagi — Mealtime</div>
+      <div class="schedule-item">🟢 10:00 pagi — Class Time</div>
+      <div class="schedule-item">🔵 11:00 pagi — Mealtime</div>
+      <div class="schedule-item">🟣 11:45 pagi — Nap Time</div>
+      <div class="schedule-item">🔵 3:20 petang — Mealtime</div>
+    </div>
+    <p id="nextCue">Seterusnya: —</p>
+    <div class="schedule-actions"><button class="start" onclick="startSchedule()">▶ MULA JADUAL</button><button class="stop" onclick="stopSchedule()">■ HENTI JADUAL</button></div>
+    <br><button class="close" onclick="closeModal('scheduleModal')">Tutup</button>
+  </div></div>
+
+  <div id="volumeModal" class="modal"><div class="card">
+    <h2>🔊 Volume</h2><input id="volumeRange" class="volume" type="range" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)"><p id="volumeText">100%</p><button class="close" onclick="closeModal('volumeModal')">Tutup</button>
+  </div></div>
+
+  <div id="qrModal" class="modal"><div class="card">
+    <h2>📷 Scan QR Eco-Melody</h2><img class="qr" src="qr.png" alt="QR Eco-Melody"><p class="small">Imbas untuk membuka aplikasi Eco-Melody.</p><button class="close" onclick="closeModal('qrModal')">Tutup</button>
+  </div></div>
+
+  <div id="settingsModal" class="modal"><div class="card">
+    <h2>⚙️ Tetapan</h2><p><b>Eco-Melody</b><br>E: Effective • C: Cue • O: Orientation</p><p class="small">Versi digital ialah pengembangan prototaip fizikal dengan empat rutin yang sama.</p><button class="close" onclick="closeModal('settingsModal')">Tutup</button>
+  </div></div>
 </div>
-<button class="stop" onclick="stopAudio()">STOP</button>
-<div id="status">ECO-MELODY READY</div>
-<div class="schedule"><h2>⏰ JADUAL AUTO ECO-MELODY</h2>
-<div class="times">
-<div class="time">🔴 Assembly Time<br><b>8:30 pagi</b></div>
-<div class="time">🔵 Meal Time<br><b>9:00 pagi</b></div>
-<div class="time">🟡 Class Time<br><b>10:00 pagi</b></div>
-<div class="time">🔵 Meal Time<br><b>11:00 pagi</b></div>
-<div class="time">🟢 Nap Time<br><b>11:45 pagi</b></div>
-<div class="time">🔵 Meal Time<br><b>3:20 petang</b></div>
-</div>
-<div class="schedule-buttons">
-<button class="start" onclick="startSchedule()">▶ MULA JADUAL</button>
-<button class="stop-schedule" onclick="stopSchedule()">■ HENTI JADUAL</button>
-</div>
-<div id="nextCue">Seterusnya: —</div>
-<div class="note">Tekan <b>MULA JADUAL</b> sekali selepas membuka aplikasi.</div>
-</div></div>
+
 <script>
-let currentAudio=null,scheduleRunning=false,lastPlayedKey="",audioUnlocked=false;
+let currentAudio=null, scheduleRunning=false, lastPlayedKey='', volume=1;
 const audioPool={};
-function prepareAudio(){["ASSEMBLY TIME.mp3","CLASS TIME.mp3","MEALTIME.mp3","NAP TIME.mp3"].forEach(f=>{const a=new Audio(f);a.preload="auto";audioPool[f]=a})}
-prepareAudio();
+const files=['ASSEMBLY TIME.mp3','CLASS TIME.mp3','MEALTIME.mp3','NAP TIME.mp3'];
+files.forEach(f=>{const a=new Audio(f);a.preload='auto';a.volume=volume;audioPool[f]=a});
 const schedule=[
-{hour:8,minute:30,file:"ASSEMBLY TIME.mp3",name:"Assembly Time"},
-{hour:9,minute:0,file:"MEALTIME.mp3",name:"Meal Time"},
-{hour:10,minute:0,file:"CLASS TIME.mp3",name:"Class Time"},
-{hour:11,minute:0,file:"MEALTIME.mp3",name:"Meal Time"},
-{hour:11,minute:45,file:"NAP TIME.mp3",name:"Nap Time"},
-{hour:15,minute:20,file:"MEALTIME.mp3",name:"Meal Time"}];
+ {hour:8,minute:30,file:'ASSEMBLY TIME.mp3',name:'Assembly Time'},
+ {hour:9,minute:0,file:'MEALTIME.mp3',name:'Mealtime'},
+ {hour:10,minute:0,file:'CLASS TIME.mp3',name:'Class Time'},
+ {hour:11,minute:0,file:'MEALTIME.mp3',name:'Mealtime'},
+ {hour:11,minute:45,file:'NAP TIME.mp3',name:'Nap Time'},
+ {hour:15,minute:20,file:'MEALTIME.mp3',name:'Mealtime'}
+];
+function status(t){document.getElementById('status').textContent=t}
 function playCue(file,name){
-if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
-currentAudio=audioPool[file] || new Audio(file);
-currentAudio.currentTime=0;
-currentAudio.play().then(()=>{document.getElementById("status").textContent="🎵 "+name.toUpperCase()+" PLAYING";document.getElementById("btText").textContent="Sedia"}).catch(()=>{document.getElementById("status").textContent="⚠️ Audio belum diaktifkan — tekan MULA JADUAL";document.getElementById("btText").textContent="Semak sambungan"});
-currentAudio.onended=()=>{document.getElementById("status").textContent=scheduleRunning?"🟢 JADUAL ECO-MELODY AKTIF":"ECO-MELODY READY"}}
-function unlockAudio(){
-const a=audioPool["ASSEMBLY TIME.mp3"];
-if(!a)return;
-a.muted=true;a.currentTime=0;
-const p=a.play();
-if(p){p.then(()=>{a.pause();a.currentTime=0;a.muted=false;audioUnlocked=true;document.getElementById("btText").textContent="Sedia"}).catch(()=>{a.muted=false})}
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
+  currentAudio=audioPool[file]||new Audio(file); currentAudio.volume=volume; currentAudio.currentTime=0;
+  currentAudio.play().then(()=>status('🎵 '+name.toUpperCase()+' PLAYING')).catch(()=>status('⚠️ Tekan MULA JADUAL dahulu untuk aktifkan audio'));
+  currentAudio.onended=()=>status(scheduleRunning?'🟢 JADUAL ECO-MELODY AKTIF':'ECO-MELODY READY');
 }
-function stopAudio(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}document.getElementById("status").textContent=scheduleRunning?"🟢 JADUAL ECO-MELODY AKTIF":"ECO-MELODY READY"}
-function startSchedule(){unlockAudio();scheduleRunning=true;document.getElementById("status").textContent="🟢 JADUAL ECO-MELODY AKTIF";document.getElementById("btText").textContent="Sedia";checkSchedule();updateNextCue()}
-function stopSchedule(){scheduleRunning=false;stopAudio();document.getElementById("status").textContent="JADUAL DIHENTIKAN";document.getElementById("nextCue").textContent="Jadual tidak aktif"}
-function checkSchedule(){if(!scheduleRunning)return;const now=new Date(),h=now.getHours(),m=now.getMinutes(),today=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();for(const x of schedule){if(h===x.hour&&m===x.minute){const key=today+"-"+x.hour+"-"+x.minute;if(lastPlayedKey!==key){lastPlayedKey=key;playCue(x.file,x.name)}break}}updateNextCue()}
-function updateNextCue(){const now=new Date();let next=null;for(const x of schedule){const t=new Date();t.setHours(x.hour,x.minute,0,0);if(t>now){next=x;break}}if(!next)next=schedule[0];document.getElementById("nextCue").textContent="Seterusnya: "+next.name+" — "+String(next.hour).padStart(2,"0")+":"+String(next.minute).padStart(2,"0")}
+function unlockAudio(){
+  const a=audioPool['ASSEMBLY TIME.mp3']; if(!a)return;
+  a.muted=true; a.currentTime=0;
+  const p=a.play(); if(p)p.then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{a.muted=false});
+}
+function startSchedule(){unlockAudio();scheduleRunning=true;status('🟢 JADUAL ECO-MELODY AKTIF');checkSchedule();updateNextCue()}
+function stopSchedule(){scheduleRunning=false;if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}status('JADUAL DIHENTIKAN');updateNextCue()}
+function checkSchedule(){if(!scheduleRunning)return;const now=new Date(),today=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();for(const x of schedule){if(now.getHours()===x.hour&&now.getMinutes()===x.minute){const key=today+'-'+x.hour+'-'+x.minute;if(lastPlayedKey!==key){lastPlayedKey=key;playCue(x.file,x.name)}break}}updateNextCue()}
+function updateNextCue(){const now=new Date();let next=null;for(const x of schedule){const t=new Date();t.setHours(x.hour,x.minute,0,0);if(t>now){next=x;break}}if(!next)next=schedule[0];document.getElementById('nextCue').textContent='Seterusnya: '+next.name+' — '+String(next.hour).padStart(2,'0')+':'+String(next.minute).padStart(2,'0')}
+function setVolume(v){volume=Number(v);document.getElementById('volumeText').textContent=Math.round(volume*100)+'%';Object.values(audioPool).forEach(a=>a.volume=volume);if(currentAudio)currentAudio.volume=volume}
+function openModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function bluetoothInfo(){
+  if(navigator.bluetooth){status('🔷 Bluetooth tersedia pada peranti — pilih speaker melalui tetapan Bluetooth peranti.')}else{status('🔷 Sambungkan speaker melalui tetapan Bluetooth peranti.')}
+}
+window.addEventListener('click',e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('show')});
 setInterval(checkSchedule,1000);updateNextCue();
-</script></body></html>
+</script>
+</body>
+</html>
