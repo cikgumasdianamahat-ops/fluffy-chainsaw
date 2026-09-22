@@ -12,11 +12,12 @@ button{border:0;border-radius:25px;padding:30px 10px;font-size:24px;font-weight:
 .stop{width:100%;margin-top:18px;background:#222;color:white}#status{text-align:center;font-weight:bold;margin:18px 0}
 .schedule{border-top:1px solid #ddd;margin-top:20px;padding-top:18px}.schedule h2{text-align:center}.time{background:#f5f5f5;border-radius:15px;padding:14px;font-size:17px}.time b{font-size:18px}
 .schedule-buttons{margin-top:18px}.start{background:#159447;color:white}.stop-schedule{background:#555;color:white}
-#nextCue{text-align:center;font-weight:bold;margin-top:15px}.note{text-align:center;font-size:13px;color:#555;line-height:1.5;margin-top:10px}
+#nextCue{text-align:center;font-weight:bold;margin-top:15px}.note{text-align:center;font-size:13px;color:#555;line-height:1.5;margin-top:10px}.bluetooth{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px auto 18px;padding:10px 16px;border-radius:18px;background:#eef6ff;color:#1261a0;font-weight:bold;font-size:16px}.bt-icon{width:24px;height:30px;display:inline-block}.bt-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round}.bt-dot{width:9px;height:9px;border-radius:50%;background:#22a05a;display:inline-block;box-shadow:0 0 0 3px #d8f3e3}
 @media(max-width:600px){button{font-size:19px;padding:26px 8px}.app{padding:20px}}
 </style></head><body>
 <div class="app">
 <img src="Brand%20Eco%20Melody.jpg" alt="Eco-Melody" class="brand-logo">
+<div class="bluetooth"><span class="bt-icon"><svg viewBox="0 0 24 30"><path d="M12 2v26M12 2l8 7-8 6 8 6-8 7M4 9l8 6M4 21l8-6"/></svg></span><span>Bluetooth Speaker</span><span class="bt-dot"></span><span id="btText">Sedia</span></div>
 <div class="buttons">
 <button class="assembly" onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')">Assembly Time</button>
 <button class="class" onclick="playCue('CLASS TIME.mp3','Class Time')">Class Time</button>
@@ -42,7 +43,10 @@ button{border:0;border-radius:25px;padding:30px 10px;font-size:24px;font-weight:
 <div class="note">Tekan <b>MULA JADUAL</b> sekali selepas membuka aplikasi.</div>
 </div></div>
 <script>
-let currentAudio=null,scheduleRunning=false,lastPlayedKey="";
+let currentAudio=null,scheduleRunning=false,lastPlayedKey="",audioUnlocked=false;
+const audioPool={};
+function prepareAudio(){["ASSEMBLY TIME.mp3","CLASS TIME.mp3","MEALTIME.mp3","NAP TIME.mp3"].forEach(f=>{const a=new Audio(f);a.preload="auto";audioPool[f]=a})}
+prepareAudio();
 const schedule=[
 {hour:8,minute:30,file:"ASSEMBLY TIME.mp3",name:"Assembly Time"},
 {hour:9,minute:0,file:"MEALTIME.mp3",name:"Meal Time"},
@@ -52,11 +56,19 @@ const schedule=[
 {hour:15,minute:20,file:"MEALTIME.mp3",name:"Meal Time"}];
 function playCue(file,name){
 if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
-currentAudio=new Audio(file);
-currentAudio.play().then(()=>{document.getElementById("status").textContent="🎵 "+name.toUpperCase()+" PLAYING"}).catch(()=>{document.getElementById("status").textContent="⚠️ Tekan MULA JADUAL dahulu"});
+currentAudio=audioPool[file] || new Audio(file);
+currentAudio.currentTime=0;
+currentAudio.play().then(()=>{document.getElementById("status").textContent="🎵 "+name.toUpperCase()+" PLAYING";document.getElementById("btText").textContent="Sedia"}).catch(()=>{document.getElementById("status").textContent="⚠️ Audio belum diaktifkan — tekan MULA JADUAL";document.getElementById("btText").textContent="Semak sambungan"});
 currentAudio.onended=()=>{document.getElementById("status").textContent=scheduleRunning?"🟢 JADUAL ECO-MELODY AKTIF":"ECO-MELODY READY"}}
+function unlockAudio(){
+const a=audioPool["ASSEMBLY TIME.mp3"];
+if(!a)return;
+a.muted=true;a.currentTime=0;
+const p=a.play();
+if(p){p.then(()=>{a.pause();a.currentTime=0;a.muted=false;audioUnlocked=true;document.getElementById("btText").textContent="Sedia"}).catch(()=>{a.muted=false})}
+}
 function stopAudio(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}document.getElementById("status").textContent=scheduleRunning?"🟢 JADUAL ECO-MELODY AKTIF":"ECO-MELODY READY"}
-function startSchedule(){scheduleRunning=true;document.getElementById("status").textContent="🟢 JADUAL ECO-MELODY AKTIF";checkSchedule();updateNextCue()}
+function startSchedule(){unlockAudio();scheduleRunning=true;document.getElementById("status").textContent="🟢 JADUAL ECO-MELODY AKTIF";document.getElementById("btText").textContent="Sedia";checkSchedule();updateNextCue()}
 function stopSchedule(){scheduleRunning=false;stopAudio();document.getElementById("status").textContent="JADUAL DIHENTIKAN";document.getElementById("nextCue").textContent="Jadual tidak aktif"}
 function checkSchedule(){if(!scheduleRunning)return;const now=new Date(),h=now.getHours(),m=now.getMinutes(),today=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();for(const x of schedule){if(h===x.hour&&m===x.minute){const key=today+"-"+x.hour+"-"+x.minute;if(lastPlayedKey!==key){lastPlayedKey=key;playCue(x.file,x.name)}break}}updateNextCue()}
 function updateNextCue(){const now=new Date();let next=null;for(const x of schedule){const t=new Date();t.setHours(x.hour,x.minute,0,0);if(t>now){next=x;break}}if(!next)next=schedule[0];document.getElementById("nextCue").textContent="Seterusnya: "+next.name+" — "+String(next.hour).padStart(2,"0")+":"+String(next.minute).padStart(2,"0")}
