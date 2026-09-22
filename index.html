@@ -1,442 +1,64 @@
 <!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eco-Melody</title>
-
+<html lang="ms"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Eco-Melody Auto Schedule</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.app {
-  width: 100%;
-  max-width: 820px;
-  background: white;
-  border-radius: 30px;
-  padding: 28px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.10);
-}
-
-.brand-logo {
-  width: 100%;
-  max-width: 520px;
-  height: auto;
-  display: block;
-  margin: 0 auto 25px;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-button {
-  border: none;
-  border-radius: 25px;
-  padding: 32px 15px;
-  font-size: 25px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.assembly {
-  background: #f45151;
-}
-
-.class {
-  background: #ffd43b;
-}
-
-.meal {
-  background: #55a4f2;
-}
-
-.nap {
-  background: #63cf78;
-}
-
-.stop {
-  width: 100%;
-  margin-top: 18px;
-  background: #222;
-  color: white;
-}
-
-#status {
-  text-align: center;
-  font-weight: bold;
-  margin: 18px 0;
-  font-size: 18px;
-}
-
-.schedule {
-  border-top: 1px solid #ddd;
-  margin-top: 20px;
-  padding-top: 18px;
-}
-
-.schedule h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.times {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.time {
-  background: #f5f5f5;
-  border-radius: 15px;
-  padding: 14px;
-  font-size: 17px;
-}
-
-.time b {
-  font-size: 18px;
-}
-
-.schedule-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.start {
-  background: #159447;
-  color: white;
-}
-
-.stop-schedule {
-  background: #555;
-  color: white;
-}
-
-#nextCue {
-  text-align: center;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-.note {
-  text-align: center;
-  font-size: 13px;
-  color: #555;
-  margin-top: 10px;
-}
-
-@media (max-width: 600px) {
-  .app {
-    padding: 20px;
-  }
-
-  .buttons,
-  .times,
-  .schedule-buttons {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  button {
-    font-size: 19px;
-    padding: 27px 8px;
-  }
-
-  .brand-logo {
-    max-width: 500px;
-  }
-}
-</style>
-</head>
-
-<body>
-
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:20px;font-family:Arial,sans-serif;background:#f4f7fb;display:flex;justify-content:center;align-items:center}
+.app{width:100%;max-width:820px;background:#fff;border-radius:30px;padding:28px;box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.brand-logo{width:100%;max-width:520px;height:auto;display:block;margin:0 auto 24px}
+.buttons,.times,.schedule-buttons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+button{border:0;border-radius:25px;padding:30px 10px;font-size:24px;font-weight:bold;cursor:pointer}
+.assembly{background:#f45151}.class{background:#ffd43b}.meal{background:#55a4f2}.nap{background:#63cf78}
+.stop{width:100%;margin-top:18px;background:#222;color:white}#status{text-align:center;font-weight:bold;margin:18px 0}
+.schedule{border-top:1px solid #ddd;margin-top:20px;padding-top:18px}.schedule h2{text-align:center}.time{background:#f5f5f5;border-radius:15px;padding:14px;font-size:17px}.time b{font-size:18px}
+.schedule-buttons{margin-top:18px}.start{background:#159447;color:white}.stop-schedule{background:#555;color:white}
+#nextCue{text-align:center;font-weight:bold;margin-top:15px}.note{text-align:center;font-size:13px;color:#555;line-height:1.5;margin-top:10px}
+@media(max-width:600px){button{font-size:19px;padding:26px 8px}.app{padding:20px}}
+</style></head><body>
 <div class="app">
-
-  <!-- BRAND ECO-MELODY -->
-  <img
-    src="Brand%20Eco%20Melody.jpg"
-    alt="Eco-Melody"
-    class="brand-logo"
-  >
-
-  <!-- BUTANG MANUAL -->
-  <div class="buttons">
-
-    <button
-      class="assembly"
-      onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')">
-      Assembly Time
-    </button>
-
-    <button
-      class="class"
-      onclick="playCue('CLASS TIME.mp3','Class Time')">
-      Class Time
-    </button>
-
-    <button
-      class="meal"
-      onclick="playCue('MEALTIME.mp3','Meal Time')">
-      Meal Time
-    </button>
-
-    <button
-      class="nap"
-      onclick="playCue('NAP TIME.mp3','Nap Time')">
-      Nap Time
-    </button>
-
-  </div>
-
-  <!-- STOP -->
-  <button class="stop" onclick="stopAudio()">STOP</button>
-
-  <div id="status">ECO-MELODY READY</div>
-
-  <!-- JADUAL -->
-  <div class="schedule">
-
-    <h2>⏰ JADUAL ECO-MELODY</h2>
-
-    <div class="times">
-
-      <div class="time">
-        🔴 Assembly Time<br>
-        <b>8:30 pagi</b>
-      </div>
-
-      <div class="time">
-        🟡 Class Time<br>
-        <b>10:00 pagi</b>
-      </div>
-
-      <div class="time">
-        🔵 Meal Time<br>
-        <b>11:00 pagi</b>
-      </div>
-
-      <div class="time">
-        🟢 Nap Time<br>
-        <b>11:45 pagi</b>
-      </div>
-
-    </div>
-
-    <div class="schedule-buttons">
-
-      <button class="start" onclick="startSchedule()">
-        ▶ MULA JADUAL
-      </button>
-
-      <button class="stop-schedule" onclick="stopSchedule()">
-        ■ HENTI JADUAL
-      </button>
-
-    </div>
-
-    <div id="nextCue">
-      Seterusnya: Assembly Time — 08:30
-    </div>
-
-    <div class="note">
-      Jadual harian: 8:30 pagi, 10:00 pagi, 11:00 pagi dan 11:45 pagi
-    </div>
-
-  </div>
-
+<img src="Brand%20Eco%20Melody.jpg" alt="Eco-Melody" class="brand-logo">
+<div class="buttons">
+<button class="assembly" onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')">Assembly Time</button>
+<button class="class" onclick="playCue('CLASS TIME.mp3','Class Time')">Class Time</button>
+<button class="meal" onclick="playCue('MEALTIME.mp3','Meal Time')">Meal Time</button>
+<button class="nap" onclick="playCue('NAP TIME.mp3','Nap Time')">Nap Time</button>
 </div>
-
+<button class="stop" onclick="stopAudio()">STOP</button>
+<div id="status">ECO-MELODY READY</div>
+<div class="schedule"><h2>⏰ JADUAL AUTO ECO-MELODY</h2>
+<div class="times">
+<div class="time">🔴 Assembly Time<br><b>8:30 pagi</b></div>
+<div class="time">🔵 Meal Time<br><b>9:00 pagi</b></div>
+<div class="time">🟡 Class Time<br><b>10:00 pagi</b></div>
+<div class="time">🔵 Meal Time<br><b>11:00 pagi</b></div>
+<div class="time">🟢 Nap Time<br><b>11:45 pagi</b></div>
+<div class="time">🔵 Meal Time<br><b>3:20 petang</b></div>
+</div>
+<div class="schedule-buttons">
+<button class="start" onclick="startSchedule()">▶ MULA JADUAL</button>
+<button class="stop-schedule" onclick="stopSchedule()">■ HENTI JADUAL</button>
+</div>
+<div id="nextCue">Seterusnya: —</div>
+<div class="note">Tekan <b>MULA JADUAL</b> sekali selepas membuka aplikasi.</div>
+</div></div>
 <script>
-
-let currentAudio = null;
-let scheduleRunning = false;
-let lastPlayed = "";
-
-const schedule = [
-  {
-    hour: 8,
-    minute: 30,
-    file: "ASSEMBLY TIME.mp3",
-    name: "Assembly Time"
-  },
-  {
-    hour: 10,
-    minute: 0,
-    file: "CLASS TIME.mp3",
-    name: "Class Time"
-  },
-  {
-    hour: 11,
-    minute: 0,
-    file: "MEALTIME.mp3",
-    name: "Meal Time"
-  },
-  {
-    hour: 11,
-    minute: 45,
-    file: "NAP TIME.mp3",
-    name: "Nap Time"
-  }
-];
-
-function playCue(file, name) {
-
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-  }
-
-  currentAudio = new Audio(file);
-
-  currentAudio.play()
-    .then(() => {
-      document.getElementById("status").innerText =
-        "🎵 " + name.toUpperCase() + " PLAYING";
-    })
-    .catch(() => {
-      document.getElementById("status").innerText =
-        "⚠️ Tekan MULA JADUAL dahulu";
-    });
-
-  currentAudio.onended = function() {
-    document.getElementById("status").innerText =
-      "ECO-MELODY READY";
-  };
-}
-
-function stopAudio() {
-
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-  }
-
-  document.getElementById("status").innerText =
-    "ECO-MELODY READY";
-}
-
-function startSchedule() {
-
-  scheduleRunning = true;
-
-  document.getElementById("status").innerText =
-    "🟢 JADUAL ECO-MELODY AKTIF";
-
-  checkSchedule();
-}
-
-function stopSchedule() {
-
-  scheduleRunning = false;
-
-  document.getElementById("status").innerText =
-    "JADUAL DIHENTIKAN";
-
-  stopAudio();
-}
-
-function checkSchedule() {
-
-  if (!scheduleRunning) return;
-
-  const now = new Date();
-
-  const hour = now.getHours();
-  const minute = now.getMinutes();
-
-  const today =
-    now.getFullYear() + "-" +
-    (now.getMonth() + 1) + "-" +
-    now.getDate();
-
-  schedule.forEach(item => {
-
-    if (
-      hour === item.hour &&
-      minute === item.minute
-    ) {
-
-      const playKey =
-        today + "-" +
-        item.hour + ":" +
-        item.minute;
-
-      if (lastPlayed !== playKey) {
-
-        lastPlayed = playKey;
-
-        playCue(
-          item.file,
-          item.name
-        );
-      }
-    }
-
-  });
-
-  updateNextCue();
-}
-
-function updateNextCue() {
-
-  const now = new Date();
-
-  let next = null;
-
-  for (const item of schedule) {
-
-    const cueTime = new Date();
-
-    cueTime.setHours(
-      item.hour,
-      item.minute,
-      0,
-      0
-    );
-
-    if (cueTime > now) {
-      next = item;
-      break;
-    }
-  }
-
-  if (!next) {
-    next = schedule[0];
-  }
-
-  let hourText = String(next.hour).padStart(2, "0");
-  let minuteText = String(next.minute).padStart(2, "0");
-
-  document.getElementById("nextCue").innerText =
-    "Seterusnya: " +
-    next.name +
-    " — " +
-    hourText +
-    ":" +
-    minuteText;
-}
-
-setInterval(checkSchedule, 1000);
-
-updateNextCue();
-
-</script>
-
-</body>
-</html>
+let currentAudio=null,scheduleRunning=false,lastPlayedKey="";
+const schedule=[
+{hour:8,minute:30,file:"ASSEMBLY TIME.mp3",name:"Assembly Time"},
+{hour:9,minute:0,file:"MEALTIME.mp3",name:"Meal Time"},
+{hour:10,minute:0,file:"CLASS TIME.mp3",name:"Class Time"},
+{hour:11,minute:0,file:"MEALTIME.mp3",name:"Meal Time"},
+{hour:11,minute:45,file:"NAP TIME.mp3",name:"Nap Time"},
+{hour:15,minute:20,file:"MEALTIME.mp3",name:"Meal Time"}];
+function playCue(file,name){
+if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
+currentAudio=new Audio(file);
+currentAudio.play().then(()=>{document.getElementById("status").textContent="🎵 "+name.toUpperCase()+" PLAYING"}).catch(()=>{document.getElementById("status").textContent="⚠️ Tekan MULA JADUAL dahulu"});
+currentAudio.onended=()=>{document.getElementById("status").textContent=scheduleRunning?"🟢 JADUAL ECO-MELODY AKTIF":"ECO-MELODY READY"}}
+function stopAudio(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}document.getElementById("status").textContent=scheduleRunning?"🟢 JADUAL ECO-MELODY AKTIF":"ECO-MELODY READY"}
+function startSchedule(){scheduleRunning=true;document.getElementById("status").textContent="🟢 JADUAL ECO-MELODY AKTIF";checkSchedule();updateNextCue()}
+function stopSchedule(){scheduleRunning=false;stopAudio();document.getElementById("status").textContent="JADUAL DIHENTIKAN";document.getElementById("nextCue").textContent="Jadual tidak aktif"}
+function checkSchedule(){if(!scheduleRunning)return;const now=new Date(),h=now.getHours(),m=now.getMinutes(),today=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();for(const x of schedule){if(h===x.hour&&m===x.minute){const key=today+"-"+x.hour+"-"+x.minute;if(lastPlayedKey!==key){lastPlayedKey=key;playCue(x.file,x.name)}break}}updateNextCue()}
+function updateNextCue(){const now=new Date();let next=null;for(const x of schedule){const t=new Date();t.setHours(x.hour,x.minute,0,0);if(t>now){next=x;break}}if(!next)next=schedule[0];document.getElementById("nextCue").textContent="Seterusnya: "+next.name+" — "+String(next.hour).padStart(2,"0")+":"+String(next.minute).padStart(2,"0")}
+setInterval(checkSchedule,1000);updateNextCue();
+</script></body></html>
