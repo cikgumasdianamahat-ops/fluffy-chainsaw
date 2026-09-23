@@ -2,538 +2,155 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Eco-Melody</title>
-.copyright {
-  text-align: center;
-  margin-top: 18px;
-  padding: 10px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #666;
-}
 <style>
-* {
-  box-sizing: border-box;
-}
-<div class="copyright">
-  © 2026 Eco-Melody | All Rights Reserved<br>
-  Hak cipta terpelihara.
-</div>
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  background: url("cute-background.png") center/cover fixed no-repeat;
-  color: #4b4b4b;
-}
-
-.overlay {
-  min-height: 100vh;
-  padding: 18px;
-  background: rgba(255,255,255,0.18);
-}
-
-.app {
-  max-width: 900px;
-  margin: auto;
-  background: rgba(255,255,255,0.90);
-  border-radius: 30px;
-  padding: 20px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
-.brand {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.brand img {
-  width: min(280px, 75%);
-  max-height: 150px;
-  object-fit: contain;
-  border-radius: 18px;
-}
-
-.status {
-  text-align: center;
-  background: #fff7cf;
-  border-radius: 18px;
-  padding: 10px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.schedule {
-  background: #ffffff;
-  border-radius: 22px;
-  padding: 15px;
-  margin-bottom: 18px;
-}
-
-.schedule h2 {
-  text-align: center;
-  margin: 5px 0 15px;
-  font-size: 22px;
-}
-
-.schedule-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  margin: 7px 0;
-  border-radius: 15px;
-  background: #f5f5f5;
-  font-weight: bold;
-}
-
-.schedule-row.active {
-  outline: 3px solid #ffd35c;
-  transform: scale(1.01);
-}
-
-.time {
-  min-width: 115px;
-}
-
-.routine {
-  flex: 1;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.routine-btn {
-  border: none;
-  min-height: 125px;
-  border-radius: 25px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
-  transition: transform .15s;
-}
-
-.routine-btn:hover {
-  transform: translateY(-3px);
-}
-
-.assembly {
-  background: #ff8d8d;
-}
-
-.class {
-  background: #ffe27a;
-}
-
-.meal {
-  background: #82d8ff;
-}
-
-.nap {
-  background: #b99cff;
-}
-
-.icon {
-  display: block;
-  font-size: 42px;
-  margin-bottom: 8px;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.control-btn {
-  border: none;
-  border-radius: 18px;
-  padding: 12px 18px;
-  background: #ffffff;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 9px rgba(0,0,0,0.10);
-}
-
-.control-btn:hover {
-  background: #fff4bd;
-}
-
-.qr {
-  text-align: center;
-  margin-top: 18px;
-}
-
-.qr img {
-  width: 120px;
-  border-radius: 12px;
-}
-
-.footer {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-@media (max-width: 600px) {
-  .buttons {
-    grid-template-columns: 1fr;
-  }
-
-  .schedule-row {
-    font-size: 14px;
-  }
-
-  .time {
-    min-width: 95px;
-  }
-}
+:root{--shadow:0 18px 50px rgba(30,75,45,.28)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#dff5ff;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+body:before{content:"";position:fixed;inset:-30px;background:url('cute-background.png') center/cover no-repeat;filter:blur(18px);transform:scale(1.08);opacity:.72}
+.app{position:relative;width:min(100vw,56.25vh);height:min(100vh,177.78vw);aspect-ratio:9/16;overflow:hidden;background:#bdeeff;box-shadow:var(--shadow);border-radius:28px}
+.scene{position:absolute;inset:0;background:url('cute-background.png') center/cover no-repeat}
+/* Exact original Eco-Melody brand placed over the AI concept artwork. */
+.brand-wrap{position:absolute;left:7%;top:3.3%;width:86%;height:15%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.96);border-radius:22px;box-shadow:0 7px 18px rgba(0,0,0,.12);z-index:5;padding:5px 9px}
+.brand-wrap img{width:100%;height:auto;display:block;border-radius:14px}
+.hit{position:absolute;border:0;background:transparent;cursor:pointer;z-index:6;border-radius:30px}
+.hit:focus-visible{outline:4px solid rgba(255,255,255,.95);outline-offset:2px}
+.hit:hover{background:rgba(255,255,255,.08)}
+#assembly{left:11%;top:27.5%;width:38%;height:22%}
+#class{left:51%;top:27.5%;width:38%;height:22%}
+#meal{left:11%;top:49.8%;width:38%;height:22%}
+#nap{left:51%;top:49.8%;width:38%;height:22%}
+#volume{left:13%;top:77%;width:15%;height:9%}
+#bluetooth{left:29%;top:77%;width:17%;height:9%}
+#auto{left:45%;top:77%;width:21%;height:9%}
+#qr{left:66%;top:77%;width:16%;height:9%}
+#settings{left:82%;top:77%;width:13%;height:9%}
+#status{position:absolute;left:12%;right:12%;bottom:7.5%;z-index:7;text-align:center;font-size:clamp(11px,2.4vw,16px);font-weight:800;color:#315d3f;background:rgba(255,255,255,.78);padding:7px 12px;border-radius:18px;backdrop-filter:blur(8px);box-shadow:0 5px 15px rgba(0,0,0,.08)}
+.modal{position:absolute;inset:0;z-index:20;background:rgba(26,63,44,.45);display:none;align-items:center;justify-content:center;padding:7%}
+.modal.show{display:flex}
+.card{width:100%;max-height:88%;overflow:auto;background:#fffdf7;border-radius:28px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;color:#31543d}
+.card h2{margin:0 0 14px;font-size:24px}.card p{line-height:1.5}.close{border:0;border-radius:18px;padding:12px 22px;background:#25a96f;color:#fff;font-weight:800;font-size:16px;cursor:pointer}
+.schedule-list{display:grid;gap:8px;text-align:left;margin:14px 0}.schedule-item{padding:11px 14px;border-radius:15px;background:#eefaf1;font-weight:700}.schedule-actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.schedule-actions button{border:0;border-radius:16px;padding:11px 15px;font-weight:800;cursor:pointer}.start{background:#2ab875;color:#fff}.stop{background:#ef5570;color:#fff}
+.qr{width:min(70vw,270px);max-width:100%;border-radius:16px;background:#fff;padding:8px}
+.volume{width:100%;accent-color:#2ab875}
+.small{font-size:13px;color:#6b786e}
+@media(max-width:600px){.app{border-radius:0}.brand-wrap{border-radius:17px}.status{font-size:12px}}
 </style>
 </head>
-
 <body>
+<div class="app" aria-label="Aplikasi Eco-Melody">
+  <div class="scene"></div>
+  <div class="brand-wrap"><img src="brand.jpg" alt="Eco-Melody E Effective C Cue O Orientation"></div>
 
-<div class="overlay">
+  <button id="assembly" class="hit" aria-label="Assembly Time" onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')"></button>
+  <button id="class" class="hit" aria-label="Class Time" onclick="playCue('CLASS TIME.mp3','Class Time')"></button>
+  <button id="meal" class="hit" aria-label="Mealtime" onclick="playCue('MEALTIME.mp3','Mealtime')"></button>
+  <button id="nap" class="hit" aria-label="Nap Time" onclick="playCue('NAP TIME.mp3','Nap Time')"></button>
 
-<div class="app">
+  <button id="volume" class="hit" aria-label="Volume" onclick="openModal('volumeModal')"></button>
+  <button id="bluetooth" class="hit" aria-label="Bluetooth" onclick="bluetoothInfo()"></button>
+  <button id="auto" class="hit" aria-label="Auto Schedule" onclick="openModal('scheduleModal')"></button>
+  <button id="qr" class="hit" aria-label="Scan QR" onclick="openModal('qrModal')"></button>
+  <button id="settings" class="hit" aria-label="Settings" onclick="openModal('settingsModal')"></button>
 
-  <div class="brand">
-    <img src="brand.jpg" alt="Eco-Melody">
-  </div>
+  <div id="status">ECO-MELODY READY</div>
 
-  <div class="status" id="status">
-    ECO-MELODY READY
-  </div>
-
-  <div class="schedule">
-
-    <h2>🌈 JADUAL ECO-MELODY 🌈</h2>
-
-    <div class="schedule-row" id="row-0830">
-      <span class="time">8:30 pagi</span>
-      <span class="routine">🔴 Assembly Time</span>
+  <div id="scheduleModal" class="modal"><div class="card">
+    <h2>⏰ Auto Schedule Eco-Melody</h2>
+    <p class="small">Tekan MULA JADUAL sekali selepas membuka aplikasi.</p>
+    <div class="schedule-list">
+      <div class="schedule-item">🔴 8:30 pagi — Assembly Time</div>
+      <div class="schedule-item">🔵 9:00 pagi — Mealtime</div>
+      <div class="schedule-item">🟢 10:00 pagi — Class Time</div>
+      <div class="schedule-item">🔵 11:00 pagi — Mealtime</div>
+      <div class="schedule-item">🟣 11:56 pagi — Nap Time</div>
+      <div class="schedule-item">🔵 3:56 petang — Mealtime</div>
     </div>
+    <p id="nextCue">Seterusnya: —</p>
+    <div class="schedule-actions"><button class="start" onclick="startSchedule()">▶ MULA JADUAL</button><button class="stop" onclick="stopSchedule()">■ HENTI JADUAL</button></div>
+    <br><button class="close" onclick="closeModal('scheduleModal')">Tutup</button>
+  </div></div>
 
-    <div class="schedule-row" id="row-0900">
-      <span class="time">9:00 pagi</span>
-      <span class="routine">🔵 Mealtime</span>
-    </div>
+  <div id="volumeModal" class="modal"><div class="card">
+    <h2>🔊 Volume</h2><input id="volumeRange" class="volume" type="range" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)"><p id="volumeText">100%</p><button class="close" onclick="closeModal('volumeModal')">Tutup</button>
+  </div></div>
 
-    <div class="schedule-row" id="row-1000">
-      <span class="time">10:00 pagi</span>
-      <span class="routine">🟡 Class Time</span>
-    </div>
+  <div id="qrModal" class="modal"><div class="card">
+    <h2>📷 Scan QR Eco-Melody</h2><img class="qr" src="qr.png" alt="QR Eco-Melody"><p class="small">Imbas untuk membuka aplikasi Eco-Melody.</p><button class="close" onclick="closeModal('qrModal')">Tutup</button>
+  </div></div>
 
-    <div class="schedule-row" id="row-1100">
-      <span class="time">11:00 pagi</span>
-      <span class="routine">🔵 Mealtime</span>
-    </div>
-
-    <div class="schedule-row" id="row-1145">
-      <span class="time">11:56 pagi</span>
-      <span class="routine">🟣 Nap Time</span>
-    </div>
-
-    <div class="schedule-row" id="row-1550">
-      <span class="time">3:56 petang</span>
-      <span class="routine">🔵 Mealtime</span>
-    </div>
-
-  </div>
-
-  <div class="buttons">
-
-    <button class="routine-btn assembly"
-      onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time','row-0830')">
-      <span class="icon">🔴</span>
-      Assembly Time
-    </button>
-
-    <button class="routine-btn class"
-      onclick="playCue('CLASS TIME.mp3','Class Time','row-1000')">
-      <span class="icon">🟡</span>
-      Class Time
-    </button>
-
-    <button class="routine-btn meal"
-      onclick="playCue('MEALTIME.mp3','Mealtime','')">
-      <span class="icon">🔵</span>
-      Mealtime
-    </button>
-
-    <button class="routine-btn nap"
-      onclick="playCue('NAP TIME.mp3','Nap Time','row-1145')">
-      <span class="icon">🟣</span>
-      Nap Time
-    </button>
-
-  </div>
-
-  <div class="controls">
-
-    <button class="control-btn" onclick="startSchedule()">
-      ▶️ MULA JADUAL
-    </button>
-
-    <button class="control-btn" onclick="stopSchedule()">
-      ⏹️ HENTI JADUAL
-    </button>
-
-    <button class="control-btn" onclick="stopAudio()">
-      🔇 STOP AUDIO
-    </button>
-
-    <button class="control-btn" onclick="testBluetooth()">
-      🔵 BLUETOOTH
-    </button>
-
-  </div>
-
-  <div class="qr">
-    <p><b>📱 Akses Eco-Melody</b></p>
-    <img src="qr.png" alt="QR Eco-Melody">
-  </div>
-
-  <div class="footer">
-    Eco-Melody<br>
-    E: Effective • C: Cue • O: Orientation
-  </div>
-
+  <div id="settingsModal" class="modal"><div class="card">
+    <h2>⚙️ Tetapan</h2><p><b>Eco-Melody</b><br>E: Effective • C: Cue • O: Orientation</p><p class="small">Versi digital ialah pengembangan prototaip fizikal dengan empat rutin yang sama.</p><button class="close" onclick="closeModal('settingsModal')">Tutup</button>
+  </div></div>
 </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:1.2%;z-index:8;text-align:center;font-size:9px;font-weight:700;color:#315d3f;opacity:.85;">© 2026 Eco-Melody | All Rights Reserved • Hak cipta terpelihara.</div>
 </div>
 
 <script>
-
-let currentAudio = null;
-let scheduleTimer = null;
-let scheduleStarted = false;
-
-/* =========================
-   AUDIO
-========================= */
-
-function playCue(file, name, rowId) {
-
-  stopAudio();
-
-  currentAudio = new Audio(file);
-
-  currentAudio.volume = 1.0;
-
-  currentAudio.play()
-    .then(() => {
-      document.getElementById("status").innerText =
-        "🎵 " + name + " sedang dimainkan";
-
-      clearActiveRows();
-
-      if (rowId) {
-        document.getElementById(rowId).classList.add("active");
-      }
-    })
-    .catch(() => {
-      document.getElementById("status").innerText =
-        "Tekan butang sekali lagi untuk mengaktifkan audio.";
-    });
-
-  currentAudio.onended = function() {
-    document.getElementById("status").innerText =
-      "ECO-MELODY READY";
-  };
-}
-
-function stopAudio() {
-
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-    currentAudio = null;
-  }
-
-  clearActiveRows();
-
-  document.getElementById("status").innerText =
-    "ECO-MELODY READY";
-}
-
-function clearActiveRows() {
-
-  document.querySelectorAll(".schedule-row")
-    .forEach(row => row.classList.remove("active"));
-
-}
-
-/* =========================
-   BLUETOOTH
-========================= */
-
-function testBluetooth() {
-
-  document.getElementById("status").innerText =
-    "🔵 Bluetooth sedia digunakan. Pastikan speaker telah dipasangkan dengan peranti.";
-
-}
-
-/* =========================
-   AUTO SCHEDULE
-========================= */
-
-const schedule = [
-
-  {
-    hour: 8,
-    minute: 30,
-    file: "ASSEMBLY TIME.mp3",
-    name: "Assembly Time",
-    row: "row-0830"
-  },
-
-  {
-    hour: 9,
-    minute: 0,
-    file: "MEALTIME.mp3",
-    name: "Mealtime",
-    row: "row-0900"
-  },
-
-  {
-    hour: 10,
-    minute: 0,
-    file: "CLASS TIME.mp3",
-    name: "Class Time",
-    row: "row-1000"
-  },
-
-  {
-    hour: 11,
-    minute: 0,
-    file: "MEALTIME.mp3",
-    name: "Mealtime",
-    row: "row-1100"
-  },
-
-  {
-    hour: 11,
-    minute: 45,
-    file: "NAP TIME.mp3",
-    name: "Nap Time",
-    row: "row-1145"
-  },
-
-  {
-    hour: 15,
-    minute: 50,
-    file: "MEALTIME.mp3",
-    name: "Mealtime",
-    row: "row-1550"
-  }
-
+let currentAudio=null, scheduleRunning=false, lastPlayedKey='', volume=1;
+let wakeLock=null;
+const audioPool={};
+const files=['ASSEMBLY TIME.mp3','CLASS TIME.mp3','MEALTIME.mp3','NAP TIME.mp3'];
+files.forEach(f=>{const a=new Audio(f);a.preload='auto';a.volume=volume;audioPool[f]=a});
+const schedule=[
+ {hour:8,minute:30,file:'ASSEMBLY TIME.mp3',name:'Assembly Time'},
+ {hour:9,minute:0,file:'MEALTIME.mp3',name:'Mealtime'},
+ {hour:10,minute:0,file:'CLASS TIME.mp3',name:'Class Time'},
+ {hour:11,minute:0,file:'MEALTIME.mp3',name:'Mealtime'},
+ {hour:11,minute:56,file:'NAP TIME.mp3',name:'Nap Time'},
+ {hour:15,minute:56,file:'MEALTIME.mp3',name:'Mealtime'}
 ];
-
-/* Prevent same cue from playing repeatedly
-   during the same minute */
-
-let lastPlayed = "";
-
-function checkSchedule() {
-
-  if (!scheduleStarted) return;
-
-  const now = new Date();
-
-  const hour = now.getHours();
-  const minute = now.getMinutes();
-
-  const currentKey =
-    now.getFullYear() + "-" +
-    now.getMonth() + "-" +
-    now.getDate() + "-" +
-    hour + "-" +
-    minute;
-
-  schedule.forEach(item => {
-
-    if (
-      item.hour === hour &&
-      item.minute === minute &&
-      lastPlayed !== currentKey
-    ) {
-
-      lastPlayed = currentKey;
-
-      playCue(
-        item.file,
-        item.name,
-        item.row
-      );
-
-    }
-
-  });
-
+function status(t){document.getElementById('status').textContent=t}
+function playCue(file,name){
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
+  currentAudio=audioPool[file]||new Audio(file); currentAudio.volume=volume; currentAudio.currentTime=0;
+  currentAudio.play().then(()=>status('🎵 '+name.toUpperCase()+' PLAYING')).catch(()=>status('⚠️ Tekan MULA JADUAL dahulu untuk aktifkan audio'));
+  currentAudio.onended=()=>status(scheduleRunning?'🟢 JADUAL ECO-MELODY AKTIF':'ECO-MELODY READY');
 }
-
-function startSchedule() {
-
-  scheduleStarted = true;
-
-  document.getElementById("status").innerText =
-    "⏰ AUTO SCHEDULE AKTIF";
-
-  /*
-    Semak dahulu apabila butang ditekan.
-    Ini juga membantu browser memberikan
-    kebenaran audio selepas interaksi pengguna.
-  */
-
+function unlockAudio(){
+  const a=audioPool['ASSEMBLY TIME.mp3']; if(!a)return;
+  a.muted=true; a.currentTime=0;
+  const p=a.play(); if(p)p.then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{a.muted=false});
+}
+async function requestWakeLock(){
+  if(!('wakeLock' in navigator)) return;
+  try{
+    wakeLock=await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release',()=>{wakeLock=null});
+  }catch(e){wakeLock=null}
+}
+async function startSchedule(){
+  unlockAudio();
+  scheduleRunning=true;
+  await requestWakeLock();
+  status('🟢 JADUAL ECO-MELODY AKTIF');
   checkSchedule();
-
-  if (!scheduleTimer) {
-
-    scheduleTimer = setInterval(
-      checkSchedule,
-      1000
-    );
-
-  }
-
+  updateNextCue();
 }
-
-function stopSchedule() {
-
-  scheduleStarted = false;
-
-  if (scheduleTimer) {
-
-    clearInterval(scheduleTimer);
-
-    scheduleTimer = null;
-
-  }
-
-  stopAudio();
-
-  document.getElementById("status").innerText =
-    "AUTO SCHEDULE DIHENTIKAN";
-
+async function stopSchedule(){
+  scheduleRunning=false;
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}
+  if(wakeLock){try{await wakeLock.release()}catch(e){} wakeLock=null}
+  status('JADUAL DIHENTIKAN');
+  updateNextCue();
 }
-
-/* =========================
-   INITIAL STATUS
-========================= */
-
-document.getElementById("status").innerText =
-  "ECO-MELODY READY";
-
+function checkSchedule(){if(!scheduleRunning)return;const now=new Date(),today=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();for(const x of schedule){if(now.getHours()===x.hour&&now.getMinutes()===x.minute){const key=today+'-'+x.hour+'-'+x.minute;if(lastPlayedKey!==key){lastPlayedKey=key;playCue(x.file,x.name)}break}}updateNextCue()}
+function updateNextCue(){const now=new Date();let next=null;for(const x of schedule){const t=new Date();t.setHours(x.hour,x.minute,0,0);if(t>now){next=x;break}}if(!next)next=schedule[0];document.getElementById('nextCue').textContent='Seterusnya: '+next.name+' — '+String(next.hour).padStart(2,'0')+':'+String(next.minute).padStart(2,'0')}
+function setVolume(v){volume=Number(v);document.getElementById('volumeText').textContent=Math.round(volume*100)+'%';Object.values(audioPool).forEach(a=>a.volume=volume);if(currentAudio)currentAudio.volume=volume}
+function openModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function bluetoothInfo(){
+  if(navigator.bluetooth){status('🔷 Bluetooth tersedia pada peranti — pilih speaker melalui tetapan Bluetooth peranti.')}else{status('🔷 Sambungkan speaker melalui tetapan Bluetooth peranti.')}
+}
+window.addEventListener('click',e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('show')});
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden && scheduleRunning) requestWakeLock();
+  if(!document.hidden && scheduleRunning) checkSchedule();
+});
+setInterval(checkSchedule,1000);updateNextCue();
 </script>
-
 </body>
 </html>
