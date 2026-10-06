@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Eco-Melody</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -27,11 +29,13 @@ body {
 .app {
   max-width: 900px;
   margin: auto;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.93);
   border-radius: 30px;
   padding: 20px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
+
+/* BRAND */
 
 .brand {
   text-align: center;
@@ -45,14 +49,18 @@ body {
   border-radius: 18px;
 }
 
+/* STATUS */
+
 .status {
   text-align: center;
   background: #fff7cf;
   border-radius: 18px;
-  padding: 10px;
+  padding: 12px;
   font-weight: bold;
   margin-bottom: 15px;
 }
+
+/* JADUAL */
 
 .schedule {
   background: #ffffff;
@@ -90,6 +98,8 @@ body {
 .routine {
   flex: 1;
 }
+
+/* BUTANG RUTIN */
 
 .buttons {
   display: grid;
@@ -134,6 +144,8 @@ body {
   margin-bottom: 8px;
 }
 
+/* CONTROL */
+
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -145,7 +157,7 @@ body {
 .control-btn {
   border: none;
   border-radius: 18px;
-  padding: 12px 18px;
+  padding: 13px 18px;
   background: #ffffff;
   font-weight: bold;
   cursor: pointer;
@@ -155,6 +167,16 @@ body {
 .control-btn:hover {
   background: #fff4bd;
 }
+
+.eco-on {
+  background: #d9ffd9 !important;
+}
+
+.eco-off {
+  background: #eeeeee !important;
+}
+
+/* QR */
 
 .qr {
   text-align: center;
@@ -166,12 +188,16 @@ body {
   border-radius: 12px;
 }
 
+/* FOOTER */
+
 .footer {
   text-align: center;
   margin-top: 15px;
   font-size: 13px;
   font-weight: bold;
 }
+
+/* COPYRIGHT */
 
 .copyright {
   text-align: center;
@@ -183,7 +209,10 @@ body {
   line-height: 1.6;
 }
 
+/* TELEFON */
+
 @media (max-width: 600px) {
+
   .buttons {
     grid-template-columns: 1fr;
   }
@@ -195,9 +224,12 @@ body {
   .time {
     min-width: 95px;
   }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -205,123 +237,267 @@ body {
 
 <div class="app">
 
-  <div class="brand">
-    <img src="brand.jpg" alt="Eco-Melody">
-  </div>
 
-  <div class="status" id="status">
-    ECO-MELODY READY
-  </div>
+<!-- BRAND -->
 
-  <div class="schedule">
+<div class="brand">
 
-    <h2>🌈 JADUAL ECO-MELODY 🌈</h2>
-
-    <div class="schedule-row" id="row-0830">
-      <span class="time">8:30 pagi</span>
-      <span class="routine">🔴 Assembly Time</span>
-    </div>
-
-    <div class="schedule-row" id="row-0900">
-      <span class="time">9:00 pagi</span>
-      <span class="routine">🔵 Mealtime</span>
-    </div>
-
-    <div class="schedule-row" id="row-1000">
-      <span class="time">10:00 pagi</span>
-      <span class="routine">🟡 Class Time</span>
-    </div>
-
-    <div class="schedule-row" id="row-1100">
-      <span class="time">11:00 pagi</span>
-      <span class="routine">🔵 Mealtime</span>
-    </div>
-
-    <div class="schedule-row" id="row-1156">
-      <span class="time">11:56 pagi</span>
-      <span class="routine">🟣 Nap Time</span>
-    </div>
-
-    <div class="schedule-row" id="row-1556">
-      <span class="time">3:56 petang</span>
-      <span class="routine">🔵 Mealtime</span>
-    </div>
-
-  </div>
-
-  <div class="buttons">
-
-    <button class="routine-btn assembly"
-      onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time','row-0830')">
-      <span class="icon">🔴</span>
-      Assembly Time
-    </button>
-
-    <button class="routine-btn class"
-      onclick="playCue('CLASS TIME.mp3','Class Time','row-1000')">
-      <span class="icon">🟡</span>
-      Class Time
-    </button>
-
-    <button class="routine-btn meal"
-      onclick="playCue('MEALTIME.mp3','Mealtime','')">
-      <span class="icon">🔵</span>
-      Mealtime
-    </button>
-
-    <button class="routine-btn nap"
-      onclick="playCue('NAP TIME.mp3','Nap Time','row-1156')">
-      <span class="icon">🟣</span>
-      Nap Time
-    </button>
-
-  </div>
-
-  <div class="controls">
-
-    <button class="control-btn" onclick="startSchedule()">
-      ▶️ MULA JADUAL
-    </button>
-
-    <button class="control-btn" onclick="stopSchedule()">
-      ⏹️ HENTI JADUAL
-    </button>
-
-    <button class="control-btn" onclick="stopAudio()">
-      🔇 STOP AUDIO
-    </button>
-
-    <button class="control-btn" onclick="testBluetooth()">
-      🔵 BLUETOOTH
-    </button>
-
-  </div>
-
-  <div class="qr">
-    <p><b>📱 Akses Eco-Melody</b></p>
-    <img src="qr.png" alt="QR Eco-Melody">
-  </div>
-
-  <div class="footer">
-    Eco-Melody<br>
-    E: Effective • C: Cue • O: Orientation
-  </div>
-
-  <div class="copyright">
-    © 2026 Eco-Melody | All Rights Reserved<br>
-    Hak cipta terpelihara.
-  </div>
+  <img src="brand.jpg" alt="Eco-Melody">
 
 </div>
+
+
+<!-- STATUS -->
+
+<div class="status" id="status">
+
+  ECO-MELODY READY
+
 </div>
+
+
+<!-- JADUAL -->
+
+<div class="schedule">
+
+<h2>🌈 JADUAL ECO-MELODY 🌈</h2>
+
+
+<div class="schedule-row" id="row-0830">
+
+  <span class="time">
+    8:30 pagi
+  </span>
+
+  <span class="routine">
+    🔴 Assembly Time
+  </span>
+
+</div>
+
+
+<div class="schedule-row" id="row-0900">
+
+  <span class="time">
+    9:00 pagi
+  </span>
+
+  <span class="routine">
+    🔵 Mealtime
+  </span>
+
+</div>
+
+
+<div class="schedule-row" id="row-1000">
+
+  <span class="time">
+    10:00 pagi
+  </span>
+
+  <span class="routine">
+    🟡 Class Time
+  </span>
+
+</div>
+
+
+<div class="schedule-row" id="row-1100">
+
+  <span class="time">
+    11:00 pagi
+  </span>
+
+  <span class="routine">
+    🔵 Mealtime
+  </span>
+
+</div>
+
+
+<div class="schedule-row" id="row-1150">
+
+  <span class="time">
+    11:50 pagi
+  </span>
+
+  <span class="routine">
+    🟣 Nap Time
+  </span>
+
+</div>
+
+
+<div class="schedule-row" id="row-1550">
+
+  <span class="time">
+    3:50 petang
+  </span>
+
+  <span class="routine">
+    🔵 Mealtime
+  </span>
+
+</div>
+
+</div>
+
+
+<!-- BUTANG RUTIN -->
+
+<div class="buttons">
+
+
+<button
+class="routine-btn assembly"
+onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time','row-0830')">
+
+<span class="icon">
+🔴
+</span>
+
+Assembly Time
+
+</button>
+
+
+<button
+class="routine-btn class"
+onclick="playCue('CLASS TIME.mp3','Class Time','row-1000')">
+
+<span class="icon">
+🟡
+</span>
+
+Class Time
+
+</button>
+
+
+<button
+class="routine-btn meal"
+onclick="playCue('MEALTIME.mp3','Mealtime','')">
+
+<span class="icon">
+🔵
+</span>
+
+Mealtime
+
+</button>
+
+
+<button
+class="routine-btn nap"
+onclick="playCue('NAP TIME.mp3','Nap Time','row-1150')">
+
+<span class="icon">
+🟣
+</span>
+
+Nap Time
+
+</button>
+
+
+</div>
+
+
+<!-- KAWALAN -->
+
+<div class="controls">
+
+
+<button
+class="control-btn"
+id="ecoPower"
+onclick="toggleEcoMelody()">
+
+🟢 ECO-MELODY ON
+
+</button>
+
+
+<button
+class="control-btn"
+onclick="stopAudio()">
+
+🔇 STOP AUDIO
+
+</button>
+
+
+<button
+class="control-btn"
+onclick="showSpeakerGuide()">
+
+🔊 SPEAKER BLUETOOTH
+
+</button>
+
+
+</div>
+
+
+<!-- QR -->
+
+<div class="qr">
+
+<p>
+<b>📱 Akses Eco-Melody</b>
+</p>
+
+<img
+src="qr.png"
+alt="QR Eco-Melody">
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+Eco-Melody<br>
+
+E: Effective • C: Cue • O: Orientation
+
+</div>
+
+
+<!-- COPYRIGHT -->
+
+<div class="copyright">
+
+© 2026 Eco-Melody | All Rights Reserved<br>
+
+Hak cipta terpelihara.
+
+</div>
+
+
+</div>
+
+</div>
+
 
 <script>
 
+
+/* =========================
+   PEMBOLEH UBAH
+========================= */
+
 let currentAudio = null;
+
 let scheduleTimer = null;
+
 let scheduleStarted = false;
+
 let lastPlayed = "";
+
 let wakeLock = null;
+
 
 /* =========================
    WAKE LOCK
@@ -333,124 +509,220 @@ async function requestWakeLock() {
 
     if ("wakeLock" in navigator) {
 
-      wakeLock = await navigator.wakeLock.request("screen");
+      wakeLock =
+        await navigator.wakeLock.request("screen");
 
-      wakeLock.addEventListener("release", () => {
-        console.log("Wake Lock dilepaskan");
-      });
+      wakeLock.addEventListener(
+        "release",
+        function() {
+
+          console.log(
+            "Wake Lock dilepaskan."
+          );
+
+        }
+      );
 
     }
 
-  } catch (error) {
+  }
 
-    console.log("Wake Lock tidak tersedia:", error);
+  catch(error) {
+
+    console.log(
+      "Wake Lock tidak tersedia.",
+      error
+    );
 
   }
 
 }
 
-/* Cuba aktifkan semula Wake Lock apabila
-   pengguna kembali ke aplikasi */
-
-document.addEventListener("visibilitychange", async () => {
-
-  if (
-    document.visibilityState === "visible" &&
-    scheduleStarted &&
-    (!wakeLock || wakeLock.released)
-  ) {
-
-    await requestWakeLock();
-
-  }
-
-});
 
 /* =========================
-   AUDIO
+   SAMBUNG SEMULA WAKE LOCK
 ========================= */
 
-function playCue(file, name, rowId) {
+document.addEventListener(
+  "visibilitychange",
+  async function() {
 
-  stopAudio();
+    if (
+      document.visibilityState === "visible" &&
+      scheduleStarted
+    ) {
 
-  currentAudio = new Audio(file);
+      if (
+        !wakeLock ||
+        wakeLock.released
+      ) {
+
+        await requestWakeLock();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================
+   MAIN AUDIO
+========================= */
+
+function playCue(
+  file,
+  name,
+  rowId
+) {
+
+  stopAudio(false);
+
+
+  currentAudio =
+    new Audio(file);
+
 
   currentAudio.volume = 1.0;
 
+
   currentAudio.play()
-    .then(() => {
 
-      document.getElementById("status").innerText =
-        "🎵 " + name + " sedang dimainkan";
+  .then(function() {
 
-      clearActiveRows();
+    document.getElementById(
+      "status"
+    ).innerText =
+      "🎵 " +
+      name +
+      " sedang dimainkan";
 
-      if (rowId) {
-        document.getElementById(rowId).classList.add("active");
+
+    clearActiveRows();
+
+
+    if (rowId) {
+
+      const row =
+        document.getElementById(rowId);
+
+      if (row) {
+
+        row.classList.add(
+          "active"
+        );
+
       }
 
-    })
-    .catch(() => {
+    }
 
-      document.getElementById("status").innerText =
-        "⚠️ Tekan MULA JADUAL dahulu untuk mengaktifkan audio.";
+  })
 
-    });
+  .catch(function() {
 
-  currentAudio.onended = function() {
+    document.getElementById(
+      "status"
+    ).innerText =
+      "⚠️ Audio memerlukan interaksi pengguna. Tekan ECO-MELODY ON dahulu.";
 
-    document.getElementById("status").innerText =
-      scheduleStarted
-      ? "🟢 JADUAL ECO-MELODY AKTIF"
-      : "ECO-MELODY READY";
+  });
 
-  };
+
+  currentAudio.onended =
+    function() {
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        scheduleStarted
+        ? "🟢 ECO-MELODY AKTIF"
+        : "ECO-MELODY READY";
+
+    };
 
 }
 
-function stopAudio() {
+
+/* =========================
+   STOP AUDIO
+========================= */
+
+function stopAudio(
+  updateStatus = true
+) {
 
   if (currentAudio) {
 
     currentAudio.pause();
+
     currentAudio.currentTime = 0;
+
     currentAudio = null;
 
   }
 
+
   clearActiveRows();
 
-  document.getElementById("status").innerText =
-    scheduleStarted
-    ? "🟢 JADUAL ECO-MELODY AKTIF"
-    : "ECO-MELODY READY";
+
+  if (updateStatus) {
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      scheduleStarted
+      ? "🟢 ECO-MELODY AKTIF"
+      : "ECO-MELODY READY";
+
+  }
 
 }
+
+
+/* =========================
+   CLEAR ACTIVE
+========================= */
 
 function clearActiveRows() {
 
-  document.querySelectorAll(".schedule-row")
-    .forEach(row => row.classList.remove("active"));
+  document
+    .querySelectorAll(
+      ".schedule-row"
+    )
+    .forEach(
+      function(row) {
+
+        row.classList.remove(
+          "active"
+        );
+
+      }
+    );
 
 }
 
+
 /* =========================
-   BLUETOOTH
+   SPEAKER BLUETOOTH
 ========================= */
 
-function testBluetooth() {
+function showSpeakerGuide() {
 
-  document.getElementById("status").innerText =
-    "🔵 Bluetooth sedia digunakan. Pastikan speaker telah dipasangkan dengan peranti.";
+  document.getElementById(
+    "status"
+  ).innerText =
+    "🔊 Sambungkan speaker Bluetooth melalui Tetapan Bluetooth telefon/tablet dahulu. Selepas disambungkan, audio Eco-Melody akan dimainkan melalui speaker.";
 
 }
 
+
 /* =========================
-   AUTO SCHEDULE
+   JADUAL
 ========================= */
 
 const schedule = [
+
 
   {
     hour: 8,
@@ -460,6 +732,7 @@ const schedule = [
     row: "row-0830"
   },
 
+
   {
     hour: 9,
     minute: 0,
@@ -467,6 +740,7 @@ const schedule = [
     name: "Mealtime",
     row: "row-0900"
   },
+
 
   {
     hour: 10,
@@ -476,6 +750,7 @@ const schedule = [
     row: "row-1000"
   },
 
+
   {
     hour: 11,
     minute: 0,
@@ -484,23 +759,26 @@ const schedule = [
     row: "row-1100"
   },
 
+
   {
     hour: 11,
-    minute: 56,
+    minute: 50,
     file: "NAP TIME.mp3",
     name: "Nap Time",
-    row: "row-1156"
+    row: "row-1150"
   },
+
 
   {
     hour: 15,
-    minute: 56,
+    minute: 50,
     file: "MEALTIME.mp3",
     name: "Mealtime",
-    row: "row-1556"
+    row: "row-1550"
   }
 
 ];
+
 
 /* =========================
    SEMAK JADUAL
@@ -508,119 +786,227 @@ const schedule = [
 
 function checkSchedule() {
 
-  if (!scheduleStarted) return;
+  if (!scheduleStarted) {
 
-  const now = new Date();
+    return;
 
-  const hour = now.getHours();
-  const minute = now.getMinutes();
+  }
+
+
+  const now =
+    new Date();
+
+
+  const hour =
+    now.getHours();
+
+
+  const minute =
+    now.getMinutes();
+
 
   const currentKey =
-    now.getFullYear() + "-" +
-    now.getMonth() + "-" +
-    now.getDate() + "-" +
-    hour + "-" +
+
+    now.getFullYear() +
+    "-" +
+    now.getMonth() +
+    "-" +
+    now.getDate() +
+    "-" +
+    hour +
+    "-" +
     minute;
 
-  schedule.forEach(item => {
 
-    if (
-      item.hour === hour &&
-      item.minute === minute &&
-      lastPlayed !== currentKey
-    ) {
+  schedule.forEach(
+    function(item) {
 
-      lastPlayed = currentKey;
 
-      playCue(
-        item.file,
-        item.name,
-        item.row
-      );
+      if (
+
+        item.hour === hour &&
+
+        item.minute === minute &&
+
+        lastPlayed !== currentKey
+
+      ) {
+
+
+        lastPlayed =
+          currentKey;
+
+
+        playCue(
+
+          item.file,
+
+          item.name,
+
+          item.row
+
+        );
+
+
+      }
 
     }
-
-  });
+  );
 
 }
 
+
 /* =========================
-   MULA JADUAL
+   ECO-MELODY ON / OFF
 ========================= */
 
-async function startSchedule() {
+async function toggleEcoMelody() {
 
-  scheduleStarted = true;
 
-  document.getElementById("status").innerText =
-    "🟢 JADUAL ECO-MELODY AKTIF";
+  if (!scheduleStarted) {
 
-  /*
-    Aktifkan Wake Lock.
-    Ini cuba mengelakkan skrin tidur sendiri.
-  */
 
-  await requestWakeLock();
+    scheduleStarted = true;
 
-  /*
-    Semak terus apabila butang ditekan.
-  */
 
-  checkSchedule();
+    await requestWakeLock();
 
-  /*
-    Semak setiap saat.
-  */
 
-  if (!scheduleTimer) {
+    const button =
+      document.getElementById(
+        "ecoPower"
+      );
 
-    scheduleTimer = setInterval(
-      checkSchedule,
-      1000
+
+    button.innerText =
+      "🔴 ECO-MELODY OFF";
+
+
+    button.classList.add(
+      "eco-on"
     );
+
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "🟢 ECO-MELODY AKTIF";
+
+
+    /*
+      Semak jadual terus.
+    */
+
+    checkSchedule();
+
+
+    /*
+      Semak setiap saat.
+    */
+
+    if (!scheduleTimer) {
+
+      scheduleTimer =
+        setInterval(
+          checkSchedule,
+          1000
+        );
+
+    }
+
+
+  }
+
+  else {
+
+
+    stopSchedule();
+
 
   }
 
 }
 
+
 /* =========================
-   HENTI JADUAL
+   STOP JADUAL
 ========================= */
 
 function stopSchedule() {
 
-  scheduleStarted = false;
+
+  scheduleStarted =
+    false;
+
 
   if (scheduleTimer) {
 
-    clearInterval(scheduleTimer);
 
-    scheduleTimer = null;
+    clearInterval(
+      scheduleTimer
+    );
+
+
+    scheduleTimer =
+      null;
+
 
   }
 
-  stopAudio();
+
+  stopAudio(false);
+
 
   if (wakeLock) {
 
-    wakeLock.release()
-      .catch(() => {});
 
-    wakeLock = null;
+    wakeLock.release()
+
+    .catch(
+      function() {}
+    );
+
+
+    wakeLock =
+      null;
+
 
   }
 
-  document.getElementById("status").innerText =
-    "JADUAL DIHENTIKAN";
+
+  const button =
+    document.getElementById(
+      "ecoPower"
+    );
+
+
+  button.innerText =
+    "🟢 ECO-MELODY ON";
+
+
+  button.classList.remove(
+    "eco-on"
+  );
+
+
+  document.getElementById(
+    "status"
+  ).innerText =
+    "ECO-MELODY READY";
+
 
 }
+
 
 /* =========================
    STATUS AWAL
 ========================= */
 
-document.getElementById("status").innerText =
+document.getElementById(
+  "status"
+).innerText =
   "ECO-MELODY READY";
+
 
 </script>
 
