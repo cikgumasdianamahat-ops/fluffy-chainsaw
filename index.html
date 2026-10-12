@@ -13,10 +13,7 @@ body{margin:0;min-height:100vh;padding:16px;font-family:Arial,sans-serif;backgro
 .brand-logo{width:100%;max-width:520px;height:auto;display:block;margin:0 auto 22px}
 .buttons,.times,.schedule-buttons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 button{border:0;border-radius:22px;padding:23px 9px;font-size:20px;font-weight:bold;cursor:pointer}
-.assembly{background:#f45151;color:#fff}
-.class{background:#ffd43b;color:#222}
-.meal{background:#55a4f2;color:#fff}
-.nap{background:#63cf78;color:#14351a}
+.assembly{background:#f45151;color:#fff}.class{background:#ffd43b;color:#222}.meal{background:#55a4f2;color:#fff}.nap{background:#63cf78;color:#14351a}
 .stop{width:100%;margin-top:16px;background:#222;color:white}
 #status{text-align:center;font-weight:bold;margin:18px 0}
 .schedule{border-top:1px solid #ddd;margin-top:20px;padding-top:18px}
@@ -24,31 +21,29 @@ button{border:0;border-radius:22px;padding:23px 9px;font-size:20px;font-weight:b
 .time{background:#f5f5f5;border-radius:15px;padding:13px;font-size:16px}
 .time b{font-size:18px}
 .schedule-buttons{margin-top:18px}
-.start{background:#159447;color:white}
-.stop-schedule{background:#555;color:white}
+.start{background:#159447;color:white}.stop-schedule{background:#555;color:white}
 #nextCue{text-align:center;font-weight:bold;margin-top:15px}
 .note{text-align:center;font-size:13px;color:#555;line-height:1.5;margin-top:10px}
 #mainApp{display:none}
 #entrance{position:fixed;inset:0;z-index:9999;background:#08151c;display:flex;align-items:center;justify-content:center;overflow:hidden}
 #brandVideo{width:100%;height:100%;object-fit:contain;background:#08151c}
-#videoStatus{position:absolute;left:12px;right:12px;bottom:16px;text-align:center;color:white;font-size:12px;text-shadow:0 1px 5px #000;opacity:.85}
+#videoStatus{position:absolute;left:12px;right:12px;bottom:18px;text-align:center;color:white;font-size:13px;text-shadow:0 1px 5px #000;opacity:.95}
+#entranceControls{position:absolute;left:16px;right:16px;bottom:56px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+#startEntranceButton{background:#f2c75c;color:#17323c;font-size:17px;padding:14px 22px;border-radius:28px;box-shadow:0 5px 20px #0005}
 #skipVideo{position:absolute;right:14px;top:14px;background:rgba(255,255,255,.9);color:#17323c;font-size:14px;padding:11px 15px;border-radius:18px}
-@media(max-width:600px){
-body{padding:10px}
-.app{padding:16px;border-radius:20px}
-button{font-size:17px;padding:21px 6px}
-.time{font-size:14px;padding:10px}
-.schedule h2{font-size:19px}
-}
+@media(max-width:600px){body{padding:10px}.app{padding:16px;border-radius:20px}button{font-size:17px;padding:21px 6px}.time{font-size:14px;padding:10px}.schedule h2{font-size:19px}}
 </style>
 </head>
 <body>
 
 <section id="entrance" aria-label="Video pembukaan Eco-Melody">
-  <video id="brandVideo" autoplay playsinline preload="auto">
+  <video id="brandVideo" playsinline preload="auto">
     <source src="Eco-Melody_logo_reveal_animation_1080p_20261012095343.mp4" type="video/mp4">
   </video>
-  <div id="videoStatus">Eco-Melody sedang dibuka…</div>
+  <div id="entranceControls">
+    <button id="startEntranceButton" type="button">▶ MULA ECO-MELODY</button>
+  </div>
+  <div id="videoStatus">Tekan Mula Eco-Melody untuk memainkan video dan jingle.</div>
   <button id="skipVideo" type="button">Terus ke rutin</button>
 </section>
 
@@ -56,14 +51,12 @@ button{font-size:17px;padding:21px 6px}
 
 <main class="app" id="mainApp">
   <img src="Brand%20Eco%20Melody.jpg" alt="Logo Eco-Melody" class="brand-logo">
-
   <div class="buttons">
     <button class="assembly" onclick="playCue('ASSEMBLY TIME.mp3','Assembly Time')">Assembly Time</button>
     <button class="class" onclick="playCue('CLASS TIME.mp3','Class Time')">Class Time</button>
     <button class="meal" onclick="playCue('MEALTIME.mp3','Meal Time')">Meal Time</button>
     <button class="nap" onclick="playCue('NAP TIME.mp3','Nap Time')">Nap Time</button>
   </div>
-
   <button class="stop" onclick="stopAudio()">■ STOP MUZIK</button>
   <div id="status">ECO-MELODY READY</div>
 
@@ -77,13 +70,12 @@ button{font-size:17px;padding:21px 6px}
       <div class="time">🟢 Nap Time<br><b>11:50 pagi</b></div>
       <div class="time">🔵 Meal Time<br><b>3:50 petang</b></div>
     </div>
-
     <div class="schedule-buttons">
       <button class="start" onclick="startSchedule()">▶ MULA JADUAL</button>
       <button class="stop-schedule" onclick="stopSchedule()">■ HENTI JADUAL</button>
     </div>
     <div id="nextCue">Seterusnya: —</div>
-    <div class="note">Jadual automatik berjalan semasa halaman dibuka. Pelayar telefon mungkin menghentikannya apabila skrin dikunci atau aplikasi berada di latar belakang.</div>
+    <div class="note">Jadual automatik berfungsi semasa halaman dibuka. Pelayar telefon mungkin menghentikan jadual apabila skrin dikunci atau aplikasi berada di latar belakang.</div>
   </section>
 </main>
 
@@ -92,7 +84,6 @@ const entrance = document.getElementById("entrance");
 const brandVideo = document.getElementById("brandVideo");
 const brandJingle = document.getElementById("brandJingle");
 const videoStatus = document.getElementById("videoStatus");
-
 let entranceDone = false;
 let currentAudio = null;
 let scheduleRunning = false;
@@ -117,67 +108,57 @@ function openMenu(){
 }
 
 async function startEntrance(){
-  try{
-    brandVideo.muted = false;
-    await brandVideo.play();
-    videoStatus.textContent = "Memainkan entrance Eco-Melody…";
+  const startButton = document.getElementById("startEntranceButton");
+  startButton.disabled = true;
+  startButton.textContent = "SEDANG MEMULAKAN…";
+  brandVideo.muted = true;
+  brandVideo.currentTime = 0;
+  brandJingle.currentTime = 0;
+  videoStatus.textContent = "Eco-Melody sedang dimulakan…";
 
-    try{
-      await brandJingle.play();
-      videoStatus.textContent = "Video dan jingle Eco-Melody sedang dimainkan…";
-    }catch(error){
-      videoStatus.textContent = "Entrance Eco-Melody sedang dimainkan…";
-    }
-  }catch(error){
-    brandVideo.muted = true;
-    try{
-      await brandVideo.play();
-      videoStatus.textContent = "Entrance Eco-Melody sedang dimainkan…";
-    }catch(err){
-      videoStatus.textContent = "Video tidak dapat dimainkan. Semak fail video dalam GitHub.";
-      setTimeout(openMenu,2500);
-    }
+  const videoResult = await brandVideo.play().then(()=>true).catch(()=>false);
+  const musicResult = await brandJingle.play().then(()=>true).catch(()=>false);
+
+  if(videoResult && musicResult){
+    videoStatus.textContent = "Video dan jingle Eco-Melody sedang dimainkan.";
+    startButton.style.display = "none";
+  }else if(videoResult && !musicResult){
+    videoStatus.textContent = "Video dimainkan. Jingle belum berbunyi — tekan MULA sekali lagi.";
+    startButton.disabled = false;
+    startButton.textContent = "▶ CUBA MAIN JINGLE";
+  }else{
+    videoStatus.textContent = "Video tidak dapat dimainkan. Semak fail MP4 dalam GitHub.";
+    startButton.disabled = false;
+    startButton.textContent = "▶ CUBA SEKALI LAGI";
   }
 }
 
-window.addEventListener("load",startEntrance);
+document.getElementById("startEntranceButton").addEventListener("click",startEntrance);
 brandVideo.addEventListener("ended",openMenu);
 brandVideo.addEventListener("error",()=>{
   videoStatus.textContent = "Fail video tidak ditemui. Semak nama fail MP4 dalam GitHub.";
-  setTimeout(openMenu,2500);
+});
+brandJingle.addEventListener("error",()=>{
+  videoStatus.textContent = "Fail jingle tidak ditemui. Semak nama Eco-Melody JINGLES.mp3 dalam GitHub.";
 });
 document.getElementById("skipVideo").addEventListener("click",openMenu);
 
 function playCue(file,name){
-  if(currentAudio){
-    currentAudio.pause();
-    currentAudio.currentTime=0;
-  }
-
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;}
   currentAudio = new Audio(encodeURI(file));
-
   currentAudio.play().then(()=>{
-    document.getElementById("status").textContent =
-      "🎵 "+name.toUpperCase()+" PLAYING";
+    document.getElementById("status").textContent = "🎵 "+name.toUpperCase()+" PLAYING";
   }).catch(()=>{
-    document.getElementById("status").textContent =
-      "Audio tidak dapat dimainkan. Semak fail MP3 dalam GitHub.";
+    document.getElementById("status").textContent = "Audio tidak dapat dimainkan. Semak fail MP3 dalam GitHub.";
   });
-
   currentAudio.onended = ()=>{
-    document.getElementById("status").textContent =
-      scheduleRunning ? "🟢 JADUAL ECO-MELODY AKTIF" : "ECO-MELODY READY";
+    document.getElementById("status").textContent = scheduleRunning ? "🟢 JADUAL ECO-MELODY AKTIF" : "ECO-MELODY READY";
   };
 }
 
 function stopAudio(){
-  if(currentAudio){
-    currentAudio.pause();
-    currentAudio.currentTime=0;
-  }
-
-  document.getElementById("status").textContent =
-    scheduleRunning ? "🟢 JADUAL ECO-MELODY AKTIF" : "ECO-MELODY READY";
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;}
+  document.getElementById("status").textContent = scheduleRunning ? "🟢 JADUAL ECO-MELODY AKTIF" : "ECO-MELODY READY";
 }
 
 function startSchedule(){
@@ -196,16 +177,11 @@ function stopSchedule(){
 
 function checkSchedule(){
   if(!scheduleRunning)return;
-
-  const now=new Date();
-  const h=now.getHours();
-  const m=now.getMinutes();
+  const now=new Date(), h=now.getHours(), m=now.getMinutes();
   const today=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
-
   for(const item of schedule){
     if(h===item.hour && m===item.minute){
       const key=today+"-"+item.hour+"-"+item.minute;
-
       if(lastPlayedKey!==key){
         lastPlayedKey=key;
         playCue(item.file,item.name);
@@ -213,30 +189,19 @@ function checkSchedule(){
       break;
     }
   }
-
   updateNextCue();
 }
 
 function updateNextCue(){
   const now=new Date();
   let next=null;
-
   for(const item of schedule){
     const time=new Date();
     time.setHours(item.hour,item.minute,0,0);
-
-    if(time>now){
-      next=item;
-      break;
-    }
+    if(time>now){next=item;break;}
   }
-
   if(!next)next=schedule[0];
-
-  document.getElementById("nextCue").textContent =
-    "Seterusnya: "+next.name+" — "+
-    String(next.hour).padStart(2,"0")+":"+
-    String(next.minute).padStart(2,"0");
+  document.getElementById("nextCue").textContent="Seterusnya: "+next.name+" — "+String(next.hour).padStart(2,"0")+":"+String(next.minute).padStart(2,"0");
 }
 
 setInterval(checkSchedule,1000);
