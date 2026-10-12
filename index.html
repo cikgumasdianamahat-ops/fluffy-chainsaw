@@ -4,25 +4,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#dff7ff">
+<meta name="theme-color" content="#e8faff">
 <title>Eco-Melody</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:20px;font-family:Arial,sans-serif;background:#f4f7fb;display:flex;justify-content:center;align-items:center}
-.app{width:100%;max-width:820px;background:#fff;border-radius:30px;padding:28px;box-shadow:0 8px 30px rgba(0,0,0,.1)}
-.brand-logo{width:100%;max-width:520px;height:auto;display:block;margin:0 auto 24px}
+body{margin:0;min-height:100vh;padding:16px;font-family:Arial,sans-serif;background:#f4f7fb;display:flex;justify-content:center;align-items:center}
+.app{width:100%;max-width:820px;background:#fff;border-radius:28px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.brand-logo{width:100%;max-width:520px;height:auto;display:block;margin:0 auto 22px}
 .buttons,.times,.schedule-buttons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-button{border:0;border-radius:25px;padding:26px 10px;font-size:22px;font-weight:bold;cursor:pointer}
-button:focus-visible{outline:4px solid #222;outline-offset:3px}
+button{border:0;border-radius:22px;padding:23px 9px;font-size:20px;font-weight:bold;cursor:pointer}
 .assembly{background:#f45151;color:#fff}
 .class{background:#ffd43b;color:#222}
 .meal{background:#55a4f2;color:#fff}
 .nap{background:#63cf78;color:#14351a}
-.stop{width:100%;margin-top:18px;background:#222;color:white}
+.stop{width:100%;margin-top:16px;background:#222;color:white}
 #status{text-align:center;font-weight:bold;margin:18px 0}
 .schedule{border-top:1px solid #ddd;margin-top:20px;padding-top:18px}
 .schedule h2{text-align:center;font-size:22px}
-.time{background:#f5f5f5;border-radius:15px;padding:14px;font-size:17px}
+.time{background:#f5f5f5;border-radius:15px;padding:13px;font-size:16px}
 .time b{font-size:18px}
 .schedule-buttons{margin-top:18px}
 .start{background:#159447;color:white}
@@ -30,34 +29,27 @@ button:focus-visible{outline:4px solid #222;outline-offset:3px}
 #nextCue{text-align:center;font-weight:bold;margin-top:15px}
 .note{text-align:center;font-size:13px;color:#555;line-height:1.5;margin-top:10px}
 #mainApp{display:none}
-#brandIntro{position:fixed;inset:0;z-index:9999;background:linear-gradient(145deg,#dff7ff,#fff2f8 52%,#fff9d9);display:flex;align-items:center;justify-content:center;padding:22px}
-.intro-card{width:100%;max-width:650px;text-align:center;background:#fff;border:5px solid #fff;border-radius:34px;padding:28px 24px;box-shadow:0 12px 35px rgba(36,116,145,.16)}
-.intro-logo{display:block;width:100%;max-width:560px;height:auto;margin:0 auto 18px}
-.intro-title{font-size:clamp(24px,5vw,38px);font-weight:900;color:#137d8b;margin:8px 0}
-.intro-sub{font-size:16px;line-height:1.5;color:#4d5b64;margin:10px 0 20px}
-#introStatus{font-size:14px;color:#64727b;margin-top:14px;min-height:20px}
-#skipIntro{background:#eef4f7;color:#34434b;width:100%;max-width:430px;padding:14px 16px;font-size:16px;border-radius:18px;margin-top:12px}
+#entrance{position:fixed;inset:0;z-index:9999;background:#08151c;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#brandVideo{width:100%;height:100%;object-fit:contain;background:#08151c}
+#videoStatus{position:absolute;left:12px;right:12px;bottom:16px;text-align:center;color:white;font-size:12px;text-shadow:0 1px 5px #000;opacity:.85}
+#skipVideo{position:absolute;right:14px;top:14px;background:rgba(255,255,255,.9);color:#17323c;font-size:14px;padding:11px 15px;border-radius:18px}
 @media(max-width:600px){
-body{padding:12px}
-button{font-size:18px;padding:23px 7px}
-.app{padding:18px;border-radius:22px}
-.intro-card{padding:22px 16px}
-.intro-logo{max-width:480px}
-.time{font-size:15px;padding:11px}
+body{padding:10px}
+.app{padding:16px;border-radius:20px}
+button{font-size:17px;padding:21px 6px}
+.time{font-size:14px;padding:10px}
 .schedule h2{font-size:19px}
 }
 </style>
 </head>
 <body>
 
-<section id="brandIntro" aria-label="Pembukaan Eco-Melody">
-  <div class="intro-card">
-    <img src="Brand%20Eco%20Melody.jpg" alt="Logo asal Eco-Melody" class="intro-logo">
-    <div class="intro-title">🎵 Selamat Datang ke Eco-Melody! 🎵</div>
-    <div class="intro-sub">Muzik pengenalan Eco-Melody akan dimainkan sebelum menu rutin dibuka.</div>
-    <div id="introStatus" aria-live="polite">Sedang cuba memainkan muzik pengenalan...</div>
-    <button id="skipIntro" type="button">MASUK KE MENU RUTIN</button>
-  </div>
+<section id="entrance" aria-label="Video pembukaan Eco-Melody">
+  <video id="brandVideo" autoplay playsinline preload="auto">
+    <source src="Eco-Melody_brand_reveal_animation_1080p_20261012093316.mp4" type="video/mp4">
+  </video>
+  <div id="videoStatus">Eco-Melody sedang dibuka…</div>
+  <button id="skipVideo" type="button">Terus ke rutin</button>
 </section>
 
 <audio id="brandJingle" src="Eco-Melody%20JINGLES.mp3" preload="auto"></audio>
@@ -85,25 +77,26 @@ button{font-size:18px;padding:23px 7px}
       <div class="time">🟢 Nap Time<br><b>11:50 pagi</b></div>
       <div class="time">🔵 Meal Time<br><b>3:50 petang</b></div>
     </div>
+
     <div class="schedule-buttons">
       <button class="start" onclick="startSchedule()">▶ MULA JADUAL</button>
       <button class="stop-schedule" onclick="stopSchedule()">■ HENTI JADUAL</button>
     </div>
     <div id="nextCue">Seterusnya: —</div>
-    <div class="note">Selepas membuka aplikasi, tekan MULA JADUAL sekali jika mahu jadual automatik berjalan. Pelayar telefon mungkin menghentikan jadual apabila skrin dikunci atau aplikasi berada di latar belakang.</div>
+    <div class="note">Jadual automatik berjalan semasa halaman dibuka. Pelayar telefon mungkin menghentikannya apabila skrin dikunci atau aplikasi berada di latar belakang.</div>
   </section>
 </main>
 
 <script>
-const brandIntro=document.getElementById("brandIntro");
+const entrance=document.getElementById("entrance");
+const brandVideo=document.getElementById("brandVideo");
 const brandJingle=document.getElementById("brandJingle");
-const introStatus=document.getElementById("introStatus");
-const mainApp=document.getElementById("mainApp");
+const videoStatus=document.getElementById("videoStatus");
 
+let entranceDone=false;
 let currentAudio=null;
 let scheduleRunning=false;
 let lastPlayedKey="";
-let introFinished=false;
 
 const schedule=[
 {hour:8,minute:30,file:"ASSEMBLY TIME.mp3",name:"Assembly Time"},
@@ -115,41 +108,45 @@ const schedule=[
 ];
 
 function openMenu(){
-  if(introFinished)return;
-  introFinished=true;
+  if(entranceDone)return;
+  entranceDone=true;
+  brandVideo.pause();
   brandJingle.pause();
-  brandIntro.style.display="none";
-  mainApp.style.display="block";
+  entrance.style.display="none";
+  document.getElementById("mainApp").style.display="block";
 }
 
-async function startBrandIntro(){
-  introStatus.textContent="Sedang cuba memainkan muzik pengenalan...";
+async function startEntrance(){
   try{
-    await brandJingle.play();
-    introStatus.textContent="🎶 Muzik Eco-Melody sedang dimainkan...";
+    brandVideo.muted=false;
+    await brandVideo.play();
+    videoStatus.textContent="Memainkan entrance Eco-Melody…";
+
+    try{
+      await brandJingle.play();
+      videoStatus.textContent="Video dan jingle Eco-Melody sedang dimainkan…";
+    }catch(error){
+      videoStatus.textContent="Entrance Eco-Melody sedang dimainkan…";
+    }
   }catch(error){
-    introStatus.textContent="Jika muzik tidak bermula secara automatik, sentuh sekali pada skrin untuk membenarkan audio.";
+    brandVideo.muted=true;
+    try{
+      await brandVideo.play();
+      videoStatus.textContent="Entrance Eco-Melody sedang dimainkan…";
+    }catch(err){
+      videoStatus.textContent="Video tidak dapat dimainkan. Semak fail MP4 dalam GitHub.";
+      setTimeout(openMenu,2500);
+    }
   }
 }
 
-window.addEventListener("load",startBrandIntro);
-
-document.addEventListener("pointerdown",async()=>{
-  if(introFinished||!brandJingle.paused)return;
-  try{
-    await brandJingle.play();
-    introStatus.textContent="🎶 Muzik Eco-Melody sedang dimainkan...";
-  }catch(error){
-    introStatus.textContent="Muzik belum dapat dimainkan. Cuba sentuh skrin sekali lagi.";
-  }
-},{once:true});
-
-brandJingle.addEventListener("ended",openMenu);
-brandJingle.addEventListener("error",()=>{
-  introStatus.textContent="Fail muzik pengenalan tidak ditemui. Semak nama fail MP3 di GitHub.";
+window.addEventListener("load",startEntrance);
+brandVideo.addEventListener("ended",openMenu);
+brandVideo.addEventListener("error",()=>{
+  videoStatus.textContent="Fail video tidak ditemui. Semak nama fail MP4 dalam GitHub.";
+  setTimeout(openMenu,2500);
 });
-
-document.getElementById("skipIntro").addEventListener("click",openMenu);
+document.getElementById("skipVideo").addEventListener("click",openMenu);
 
 function playCue(file,name){
   if(currentAudio){
@@ -160,7 +157,7 @@ function playCue(file,name){
   currentAudio.play().then(()=>{
     document.getElementById("status").textContent="🎵 "+name.toUpperCase()+" PLAYING";
   }).catch(()=>{
-    document.getElementById("status").textContent="⚠️ Tekan butang rutin sekali lagi untuk memainkan audio.";
+    document.getElementById("status").textContent="Audio tidak dapat dimainkan. Semak fail MP3 dalam GitHub.";
   });
   currentAudio.onended=()=>{
     document.getElementById("status").textContent=
@@ -214,6 +211,7 @@ function checkSchedule(){
 function updateNextCue(){
   const now=new Date();
   let next=null;
+
   for(const item of schedule){
     const time=new Date();
     time.setHours(item.hour,item.minute,0,0);
@@ -222,7 +220,9 @@ function updateNextCue(){
       break;
     }
   }
+
   if(!next)next=schedule[0];
+
   document.getElementById("nextCue").textContent=
     "Seterusnya: "+next.name+" — "+
     String(next.hour).padStart(2,"0")+":"+
